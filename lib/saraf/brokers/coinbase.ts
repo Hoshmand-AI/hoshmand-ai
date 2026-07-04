@@ -55,29 +55,53 @@ export class CoinbaseAdapter implements BrokerAdapter {
 
   async getAccount(): Promise<AccountSummary> {
     const balances = await this.getBalances();
-    const cash = balances.find((b) => b.asset === "USD" || b.asset === "USDC");
-    return {
-      status: "ACTIVE",
-      cashUsd: cash?.free ?? 0,
-      portfolioUsd: cash?.free ?? 0, // non-USD holdings need per-asset pricing to value
-      positions: balances.filter((b) => b.free > 0 && b.asset !== "USD"),
-    };
+    let cashUsd = 0;
+    const positions: Balance[] = [];
+    for (const b of balances) {
+      if (b.free <= 0) continue;
+      if (b.asset === "USD" || b.asset === "USDC") {
+        cashUsd += b.free;
+        continue;
+      }
+      // Value each crypto holding at its live USD price.
+      let usdValue = 0;
+      try {
+        usdValue = b.free * (await this.getPrice(`${b.asset}-USD`));
+      } catch {
+        usdValue = 0; // no USD market for this asset — leave unpriced
+      }
+      positions.push({ asset: b.asset, free: b.free, usdValue });
+    }
+    const holdingsUsd = positions.reduce((sum, p) => sum + p.usdValue, 0);
+    return { status: "ACTIVE", cashUsd, portfolioUsd: cashUsd + holdingsUsd, positions };
   }
 
   async placeOrder(order: OrderIntent): Promise<Fill> {
-    // Market order by USD notional (quote size for buys).
+    const price = order.refPrice ?? (await this.getPrice(order.symbol));
+    // Coinbase market orders: buys are sized in USD (quote_size); sells are
+    // sized in the base asset (base_size), derived from the USD amount.
+    const config =
+      order.side === "buy"
+        ? { quote_size: order.notionalUsd.toFixed(2) }
+        : { base_size: (price > 0 ? order.notionalUsd / price : 0).toFixed(8) };
     const body = {
-      client_order_id: `saraf-${order.symbol}-${order.side}-${order.notionalUsd}`,
+      client_order_id: `saraf-${order.symbol}-${order.side}-${Date.now()}`,
       product_id: order.symbol,
       side: order.side.toUpperCase(),
-      order_configuration: { market_market_ioc: { quote_size: order.notionalUsd.toFixed(2) } },
+      order_configuration: { market_market_ioc: config },
     };
-    const data = await this.signedRequest<{ success?: boolean; order_id?: string; success_response?: { order_id: string } }>(
+    const data = await this.signedRequest<{ success?: boolean; order_id?: string; success_response?: { order_id: string }; error_response?: { message?: string } }>(
       "POST",
       "/api/v3/brokerage/orders",
       body
     );
-    const price = order.refPrice ?? (await this.getPrice(order.symbol));
+    if (data.error_response) {
+      return {
+        ok: false, mode: "live", platform: order.platform, symbol: order.symbol, side: order.side,
+        filledUnits: 0, price, feeUsd: 0, notionalUsd: order.notionalUsd,
+        message: `Coinbase rejected the order: ${data.error_response.message ?? "unknown error"}`,
+      };
+    }
     return {
       ok: Boolean(data.success ?? data.order_id ?? data.success_response),
       mode: "live",
@@ -102,7 +126,10 @@ export class CoinbaseAdapter implements BrokerAdapter {
     const header = { alg: "ES256", kid: this.creds.keyName, typ: "JWT", nonce: randomBytes(16).toString("hex") };
     const payload = { sub: this.creds.keyName, iss: "cdp", nbf: now, exp: now + 120, uri: `${method} ${HOST}${path}` };
     const signingInput = `${b64(header)}.${b64(payload)}`;
-    const key = createPrivateKey(this.creds.privateKeyPem);
+    // Coinbase's downloaded key often stores newlines as literal "\n" text;
+    // convert them back to real line breaks so the PEM decodes.
+    const pem = this.creds.privateKeyPem.replace(/\\n/g, "\n");
+    const key = createPrivateKey(pem);
     // JOSE requires the raw (r||s) signature, not DER — dsaEncoding handles it.
     const signature = cryptoSign("SHA256", Buffer.from(signingInput), { key, dsaEncoding: "ieee-p1363" });
     return `${signingInput}.${signature.toString("base64url")}`;

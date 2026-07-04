@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPlatform } from "@/lib/saraf/brokers/registry";
 import { PaperAdapter } from "@/lib/saraf/brokers/paper";
 import { AlpacaAdapter } from "@/lib/saraf/brokers/alpaca";
+import { CoinbaseAdapter } from "@/lib/saraf/brokers/coinbase";
 import type { BrokerAdapter, Fill, OrderIntent } from "@/lib/saraf/brokers/types";
 
 // Server-side execution gateway. All orders flow through here so risk limits
@@ -18,6 +19,8 @@ const LIVE_ENABLED = process.env.SARAF_LIVE_ENABLED === "true";
 
 const alpacaConfigured = () =>
   Boolean(process.env.ALPACA_API_KEY_ID && process.env.ALPACA_API_SECRET_KEY);
+const coinbaseConfigured = () =>
+  Boolean(process.env.COINBASE_API_KEY_NAME && process.env.COINBASE_API_PRIVATE_KEY);
 
 function reject(message: string, status = 400) {
   return NextResponse.json({ ok: false, message }, { status });
@@ -52,15 +55,22 @@ export async function POST(req: NextRequest) {
     return reject("Live trading is not enabled on this deployment. Orders run in paper mode only.", 403);
   }
 
-  // Choose the adapter. If the selected platform has real credentials, route
-  // to it (its paper endpoint unless live is explicitly enabled). Otherwise
-  // fall back to the internal simulator so the agent still runs end to end.
+  // Choose the adapter. A REAL order is placed only when the user explicitly
+  // asked for live mode, the server has live enabled, and the broker has
+  // credentials. Every other case simulates, so paper mode can never move
+  // real money even with keys present.
   let adapter: BrokerAdapter;
-  if (platform.id === "alpaca" && alpacaConfigured()) {
+  const live = wantsLive && LIVE_ENABLED;
+  if (live && platform.id === "coinbase" && coinbaseConfigured()) {
+    adapter = new CoinbaseAdapter(platform, {
+      keyName: process.env.COINBASE_API_KEY_NAME as string,
+      privateKeyPem: process.env.COINBASE_API_PRIVATE_KEY as string,
+    });
+  } else if (platform.id === "alpaca" && alpacaConfigured()) {
     adapter = new AlpacaAdapter(platform, {
       keyId: process.env.ALPACA_API_KEY_ID as string,
       secret: process.env.ALPACA_API_SECRET_KEY as string,
-      live: wantsLive && LIVE_ENABLED,
+      live,
     });
   } else {
     adapter = new PaperAdapter(platform, intent.refPrice ?? 0);

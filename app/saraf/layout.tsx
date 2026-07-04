@@ -21,8 +21,8 @@ export default function SarafLayout({ children }: { children: React.ReactNode })
       <header className="border-b border-white/10 bg-navy-950">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/saraf" className="flex items-center gap-2.5">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gold-500 text-[13px] font-bold text-navy-950">
-              ص
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gold-500 text-[15px] font-bold text-navy-950">
+              $
             </span>
             <span className="flex items-baseline gap-2">
               <span className="font-serif text-lg text-white">Saraf</span>
@@ -30,6 +30,9 @@ export default function SarafLayout({ children }: { children: React.ReactNode })
             </span>
           </Link>
           <div className="flex items-center gap-4">
+            <Link href="/saraf/trade" className="text-[13px] font-medium text-white/60 transition-colors hover:text-white">
+              Trade
+            </Link>
             <Link href="/saraf/risk" className="text-[13px] font-medium text-white/60 transition-colors hover:text-white">
               Risk
             </Link>

@@ -8,7 +8,7 @@ export default function SarafPage() {
       {/* Hero */}
       <div className="mb-10 max-w-3xl">
         <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-gold-400/70">
-          Autonomous trading agent · صرّاف
+          Autonomous trading agent
         </p>
         <h1 className="mt-3 font-serif text-4xl text-white sm:text-5xl">It trades. You watch.</h1>
         <p className="mt-4 text-[15px] leading-relaxed text-white/60">
