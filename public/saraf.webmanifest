@@ -1,0 +1,14 @@
+{
+  "name": "Saraf — Autonomous Trading Agent",
+  "short_name": "Saraf",
+  "description": "An autonomous trading agent for Bitcoin, Oil, and Gold. Connects to your own brokerage; paper by default.",
+  "start_url": "/saraf",
+  "scope": "/saraf",
+  "display": "standalone",
+  "background_color": "#0A1628",
+  "theme_color": "#0A1628",
+  "icons": [
+    { "src": "/saraf-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/saraf-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
