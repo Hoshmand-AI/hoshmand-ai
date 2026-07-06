@@ -20,6 +20,18 @@ export const config = {
   get triggerSecret() {
     return required("TRIGGER_SECRET");
   },
+  get googleClientId() {
+    return required("GOOGLE_CLIENT_ID");
+  },
+  get googleClientSecret() {
+    return required("GOOGLE_CLIENT_SECRET");
+  },
+  get googleRefreshToken() {
+    return required("GOOGLE_REFRESH_TOKEN");
+  },
+  get qstashToken() {
+    return required("QSTASH_TOKEN");
+  },
 
   get maxAttempts() {
     return parseInt(process.env.MAX_ATTEMPTS || "15", 10);
@@ -27,6 +39,14 @@ export const config = {
   // Seconds each call rings before giving up and retrying.
   get ringTimeoutSeconds() {
     return parseInt(process.env.RING_TIMEOUT_SECONDS || "25", 10);
+  },
+  // Seconds after press-1 before checking Gmail for the deactivation email.
+  get verifyDelaySeconds() {
+    return parseInt(process.env.VERIFY_DELAY_SECONDS || "300", 10);
+  },
+  // Total call-then-verify cycles before giving up with an SMS.
+  get maxCycles() {
+    return parseInt(process.env.MAX_CYCLES || "3", 10);
   },
   get callMessage() {
     return (

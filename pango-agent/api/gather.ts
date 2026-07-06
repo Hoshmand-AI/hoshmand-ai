@@ -1,10 +1,14 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import twilio from "twilio";
+import { config } from "../lib/config";
+import { scheduleVerify } from "../lib/qstash";
 import { getSession, saveSession } from "../lib/store";
 import { isValidTwilioRequest, xml } from "../lib/twilio";
 
-// Handles the digit pressed during a call. Pressing 1 marks the session
-// confirmed, which stops the redial loop.
+// Handles the digit pressed during a call. Pressing 1 pauses the calls and
+// schedules a Gmail check for the deactivation email 5 minutes out.
+// scheduleVerify runs before the phase flips: if scheduling fails, the
+// session stays in "calling" and the status callback simply redials.
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!isValidTwilioRequest(req)) {
     return res.status(403).json({ error: "Invalid Twilio signature" });
@@ -16,13 +20,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (digits === "1") {
     const session = await getSession();
     if (session && !session.endedReason) {
-      session.confirmed = true;
-      session.endedReason = "confirmed";
+      await scheduleVerify(req.headers.host);
+      session.phase = "verifying";
       await saveSession(session);
     }
     twiml.say(
       { voice: "Polly.Matthew" },
-      "Confirmed. Don't forget to actually stop the parking session in the Pango app. Goodbye."
+      "Got it. Now go stop the parking session in the Pango app. " +
+        `In ${Math.round(config.verifyDelaySeconds / 60)} minutes I will check your email ` +
+        "for the deactivation receipt, and if it is not there, I will start calling you again. Goodbye."
     );
     twiml.hangup();
   } else {

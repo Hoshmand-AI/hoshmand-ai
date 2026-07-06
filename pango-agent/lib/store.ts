@@ -2,10 +2,15 @@ import { Redis } from "@upstash/redis";
 
 export interface Session {
   id: string;
+  // Verification cycle (1-based): each cycle is a run of calls ended by
+  // press-1, followed 5 minutes later by a Gmail check for the
+  // deactivation email. No email -> next cycle of calls.
+  cycle: number;
+  // Calls placed within the current cycle.
   attempts: number;
-  confirmed: boolean;
+  phase: "calling" | "verifying";
   startedAt: string;
-  endedReason?: "confirmed" | "max_attempts" | "stopped";
+  endedReason?: "verified" | "max_attempts" | "max_cycles" | "stopped";
 }
 
 const KEY = "pango:session";

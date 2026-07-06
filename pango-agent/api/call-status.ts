@@ -18,8 +18,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const session = await getSession();
-  if (!session || session.endedReason) {
-    return res.status(200).json({ ok: true, done: true, reason: session?.endedReason ?? "no session" });
+  if (!session || session.endedReason || session.phase !== "calling") {
+    return res.status(200).json({
+      ok: true,
+      done: true,
+      reason: session?.endedReason ?? (session ? `phase ${session.phase}` : "no session"),
+    });
   }
 
   if (session.attempts >= config.maxAttempts) {
