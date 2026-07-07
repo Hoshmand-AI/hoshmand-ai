@@ -179,8 +179,7 @@ network layer — including real Twilio webhook signature validation.
   session is running and stays silent; if a *deactivation* email is delayed
   past the 5-minute check, you'll get one extra round of calls after already
   stopping. Press 1 again and it re-verifies.
-- The Gmail account checked must be the one your Pango receipts go to
-  (sediq.ne@gmail.com).
+- The Gmail account checked must be the one your Pango receipts go to.
 - True carrier-level caller-ID name isn't reliably settable in the US; the
   saved **Pango contact** is what makes the name appear.
 - iOS location automations require the Shortcuts app to have location

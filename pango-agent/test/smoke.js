@@ -18,7 +18,7 @@ const assert = require("assert");
 // ---- stub state ----
 const kv = new Map();
 const gmail = {
-  latestEventSnippet: "Parking activation, Plate: SWP9351", // newest Pango event email
+  latestEventSnippet: "Parking activation, Plate: ABC1234", // newest Pango event email
   hasDeactivationSince: false, // result of the "Parking deactivation after:X" search
   down: false, // simulate Gmail/Google outage
 };
@@ -128,7 +128,7 @@ function setSession(s) {
   assert.strictEqual(twilioRequests.length, 0);
 
   // 2. smart arming: newest Pango email is a DEACTIVATION -> no call
-  gmail.latestEventSnippet = "Parking deactivation, Plate: SWP9351";
+  gmail.latestEventSnippet = "Parking deactivation, Plate: ABC1234";
   res = makeRes();
   await trigger(makeReq({ url: "/api/trigger", headers: auth }), res);
   assert.strictEqual(res.jsonBody.started, false);
@@ -137,7 +137,7 @@ function setSession(s) {
   assert.ok(!kv.has("pango:session"));
 
   // 3. newest email is an ACTIVATION -> session created, call placed
-  gmail.latestEventSnippet = "Parking activation, Plate: SWP9351";
+  gmail.latestEventSnippet = "Parking activation, Plate: ABC1234";
   res = makeRes();
   await trigger(makeReq({ url: "/api/trigger", headers: auth }), res);
   assert.strictEqual(res.jsonBody.started, true);
