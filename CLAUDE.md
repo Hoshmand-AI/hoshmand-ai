@@ -29,6 +29,7 @@ Ahmad wants these settled up front, every time, before writing code:
 
 ## Existing apps
 
-- `pango-agent/` — Pango parking reminder agent (Twilio call loop +
-  Gmail-receipt verification). Destined for its own repo
-  (`Hoshmand-AI/pango-agent`) once created; see `pango-agent/README.md`.
+- **pango-agent** — Pango parking reminder agent (Twilio call loop +
+  Gmail-receipt verification). Lives in its own public repo:
+  `Hoshmand-AI/pango-agent`. On Ahmad's PC: `~/AI Projects/pango-agent`.
+  Note the space in "AI Projects" — quote paths in shell commands.
