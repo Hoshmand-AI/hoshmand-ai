@@ -1,0 +1,11 @@
+{
+  "name": "@hoshmand/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@hoshmand/agents": "0.1.0",
+    "@hoshmand/core": "0.1.0",
+    "dotenv": "^16.4.5"
+  }
+}

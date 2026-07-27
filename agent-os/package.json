@@ -1,0 +1,20 @@
+{
+  "name": "@hoshmand/agent-os",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Hoshmand AI Agent OS — a team of personal AI agents (email, calendar, social, gym) built on the Anthropic API",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "agent": "tsx apps/worker/src/run.ts",
+    "gmail-auth": "tsx scripts/gmail-auth.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}
