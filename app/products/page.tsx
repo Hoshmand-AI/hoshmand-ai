@@ -32,7 +32,7 @@ export default function ProductsPage() {
             What we're shipping and building.
           </h1>
           <p className="max-w-xl text-[15px] text-white/50">
-            One product live. Five in active development. Every one grounded in
+            One product live. Six in active development. Every one grounded in
             responsible AI principles.
           </p>
         </Container>
