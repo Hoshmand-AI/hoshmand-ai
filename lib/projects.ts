@@ -148,6 +148,28 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "dastyar",
+    name: "Dastyar",
+    tagline: "A team of AI agents for email, calendar, social, and daily tasks.",
+    status: "in-development",
+    expectedShip: "Q4 2026",
+    problem:
+      "Staying on top of multiple inboxes, calendars, and social accounts eats hours of attention every day. Existing AI assistants handle one channel, not your whole life.",
+    approach:
+      "Connect as many accounts as you want, then assemble a team of agents. Each agent owns one job: triaging email, managing the calendar, drafting social posts, or a custom task you describe in plain language. Agents prepare, you approve.",
+    highlights: [
+      "Multiple accounts per channel (Gmail, Outlook, X, LinkedIn, and more)",
+      "Reply drafts and posts wait for your approval, nothing auto-sends",
+      "One daily brief across every connected account",
+      "Create custom agents with a name and a plain-language task",
+    ],
+    ethics: [
+      "Human-in-the-loop by default: agents act only with permissions you grant",
+      "Official platform APIs only, no ToS-violating automation",
+      "Connections are separate, revocable permissions",
+    ],
+  },
+  {
     slug: "planora",
     name: "Planora",
     tagline: "Construction schedule analysis. $200/hr consultant replaced.",
