@@ -8,25 +8,57 @@ import StatusPill from "./StatusPill";
 import ProjectNotifyForm from "./ProjectNotifyForm";
 import Wordmark from "./Wordmark";
 import Spotlight from "./ui/Spotlight";
+import AccessNote from "./AccessNote";
 
 export default function InDevCard({ project }: { project: Project }) {
-  const { slug, name, tagline, liveUrl, highlights } = project;
+  const { slug, name, tagline, liveUrl, highlights, appUrl, access } = project;
+  const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
   const [expanded, setExpanded] = useState(false);
 
   return (
     <Spotlight as="article" className="card card-interactive group flex h-full flex-col overflow-hidden">
-      {/* Wordmark banner */}
-      <div className="hero-surface relative flex h-40 items-center justify-center">
-        <Wordmark
-          slug={slug}
-          name={name}
-          className="text-[40px] text-white transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-        />
-      </div>
+      {/* Wordmark banner: opens the real app when the product has one. */}
+      {appUrl ? (
+        <a
+          href={appUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${name} (${appHost}) in a new tab`}
+          className="hero-surface group/banner relative flex h-40 items-center justify-center"
+        >
+          <Wordmark
+            slug={slug}
+            name={name}
+            className="text-[40px] text-white transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+          />
+          <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur transition-colors group-hover/banner:bg-white/15 group-hover/banner:text-white">
+            {appHost}
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+            </svg>
+          </span>
+        </a>
+      ) : (
+        <div className="hero-surface relative flex h-40 items-center justify-center">
+          <Wordmark
+            slug={slug}
+            name={name}
+            className="text-[40px] text-white transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-1 flex-col p-6">
         <div className="mb-3 flex items-start justify-between gap-3">
-          <h3 className="text-[18px] font-semibold text-navy-950">{name}</h3>
+          <h3 className="text-[18px] font-semibold text-navy-950">
+            {appUrl ? (
+              <a href={appUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-600">
+                {name}
+              </a>
+            ) : (
+              name
+            )}
+          </h3>
           <StatusPill status="in-development" />
         </div>
         <p className="text-[14px] leading-relaxed text-warm-600">{tagline}</p>
@@ -90,7 +122,24 @@ export default function InDevCard({ project }: { project: Project }) {
               </svg>
             </a>
           )}
-          <ProjectNotifyForm slug={slug} />
+          {appUrl ? (
+            <>
+              <div className="flex flex-wrap items-center gap-3">
+                <a href={appUrl} target="_blank" rel="noopener noreferrer" className="btn-primary !h-10">
+                  Open {name}
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </a>
+                {access === "invite-only" && <AccessNote />}
+              </div>
+              {access === "invite-only" && (
+                <ProjectNotifyForm slug={slug} label="No invite yet? Join the waitlist" variant="secondary" />
+              )}
+            </>
+          ) : (
+            <ProjectNotifyForm slug={slug} />
+          )}
           <Link href={`/products/${slug}`} className="arrow-link text-[13px] text-warm-500 hover:text-navy-950">
             Full details
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

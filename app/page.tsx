@@ -62,6 +62,8 @@ export default function Home() {
     highlights: p.highlights,
     href: p.customPage ? `/${p.slug}` : `/products/${p.slug}`,
     appStoreUrl: p.appStoreUrl,
+    appUrl: p.appUrl,
+    access: p.access,
   }));
   const shippingCount = projects.filter((p) => p.status === "shipping").length;
 
