@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SegmentedControl from "../ui/SegmentedControl";
 import Wordmark from "../Wordmark";
 import StatusPill from "../StatusPill";
+import AccessNote from "../AccessNote";
 
 export interface ShowcaseProduct {
   slug: string;
@@ -16,6 +17,8 @@ export interface ShowcaseProduct {
   highlights: string[];
   href: string;
   appStoreUrl?: string;
+  appUrl?: string;
+  access?: "invite-only";
 }
 
 // Interactive product switcher: pick a product, the stage slides in the direction you moved.
@@ -105,9 +108,17 @@ export default function ProductShowcase({ products }: { products: ShowcaseProduc
                   <a href={product.appStoreUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
                     Get it on the App Store
                   </a>
+                ) : product.appUrl ? (
+                  <a href={product.appUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                    Open {product.name}
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                  </a>
                 ) : (
                   <Link href={product.href} className="btn-primary">Join the waitlist</Link>
                 )}
+                {product.access === "invite-only" && <AccessNote />}
                 <Link href={product.href} className="arrow-link text-[13.5px] text-warm-600 hover:text-navy-950">
                   Learn more
                   <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

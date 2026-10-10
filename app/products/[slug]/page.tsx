@@ -6,6 +6,7 @@ import StatusPill from "@/components/StatusPill";
 import ProjectNotifyForm from "@/components/ProjectNotifyForm";
 import ProjectTabs from "@/components/ProjectTabs";
 import Wordmark from "@/components/Wordmark";
+import AccessNote from "@/components/AccessNote";
 import HeroText, { HeroFade } from "@/components/motion/HeroText";
 import Reveal from "@/components/motion/Reveal";
 import { getProject, projects } from "@/lib/projects";
@@ -36,7 +37,8 @@ export default function ProjectDetailPage({ params }: Props) {
   if (!project) notFound();
   if (project.customPage) redirect(`/${project.slug}`);
 
-  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact } = project;
+  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access } = project;
+  const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
 
   // Neighbours for the "next product" footer.
   const list = projects.filter((p) => !p.customPage);
@@ -67,6 +69,22 @@ export default function ProjectDetailPage({ params }: Props) {
               <HeroFade delay={0.35}>
                 <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/60">{tagline}</p>
               </HeroFade>
+              {appUrl && (
+                <HeroFade delay={0.45}>
+                  <div className="mt-8 flex flex-wrap items-center gap-4">
+                    <a href={appUrl} target="_blank" rel="noopener noreferrer" className="btn-primary !h-12 !px-7 text-[15px]">
+                      Open {name}
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                      </svg>
+                    </a>
+                    <span className="flex flex-col gap-0.5">
+                      <span className="text-[13px] font-medium text-white/70">{appHost}</span>
+                      {access === "invite-only" && <AccessNote tone="dark" />}
+                    </span>
+                  </div>
+                </HeroFade>
+              )}
               {status === "in-development" && (
                 <HeroFade delay={0.5}>
                   <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -91,10 +109,28 @@ export default function ProjectDetailPage({ params }: Props) {
 
             {/* Wordmark tile: frosted glass floating on the hero. */}
             <HeroFade delay={0.3}>
-              <div className="relative mx-auto flex aspect-[4/3] w-full max-w-md items-center justify-center rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-                <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(60%_60%_at_50%_40%,rgba(200,150,62,0.18),transparent_70%)]" />
-                <Wordmark slug={slug} name={name} className="relative text-[52px] text-white sm:text-[64px]" />
-              </div>
+              {(() => {
+                const tile = (
+                  <>
+                    <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(60%_60%_at_50%_40%,rgba(200,150,62,0.18),transparent_70%)]" />
+                    <Wordmark slug={slug} name={name} className="relative text-[52px] text-white sm:text-[64px]" />
+                  </>
+                );
+                const cls = "relative mx-auto flex aspect-[4/3] w-full max-w-md items-center justify-center rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] backdrop-blur-xl";
+                return appUrl ? (
+                  <a
+                    href={appUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${name} (${appHost}) in a new tab`}
+                    className={`${cls} transition-[transform,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-gold-500/40`}
+                  >
+                    {tile}
+                  </a>
+                ) : (
+                  <div className={cls}>{tile}</div>
+                );
+              })()}
             </HeroFade>
           </div>
         </Container>
@@ -131,8 +167,14 @@ export default function ProjectDetailPage({ params }: Props) {
 
             <Reveal delay={0.1}>
               <div className="card p-6 lg:sticky lg:top-24">
-                <p className="text-[16px] font-semibold text-navy-950">Get notified when it ships</p>
-                <p className="mb-5 mt-1 text-[13px] text-warm-500">No spam. One email when it&apos;s ready.</p>
+                <p className="text-[16px] font-semibold text-navy-950">
+                  {access === "invite-only" ? "No invite yet?" : "Get notified when it ships"}
+                </p>
+                <p className="mb-5 mt-1 text-[13px] text-warm-500">
+                  {access === "invite-only"
+                    ? `${name} is in an invite-only beta. Join the waitlist and we'll email you when a spot opens.`
+                    : "No spam. One email when it's ready."}
+                </p>
                 <ProjectNotifyForm slug={slug} startOpen />
               </div>
             </Reveal>

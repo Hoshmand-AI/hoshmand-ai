@@ -7,6 +7,10 @@ export interface Project {
   status: ProjectStatus;
   expectedShip?: string;
   liveUrl?: string;
+  /** The product's real web app. Shown as "Open <name>" with an access note. */
+  appUrl?: string;
+  /** Who can get in once they open appUrl. */
+  access?: "invite-only";
   appStoreUrl?: string;
   screenshot?: string;
   problem: string;
@@ -52,6 +56,8 @@ export const projects: Project[] = [
       "Connect as many email accounts as you want. MailHandled reads and sorts your email, puts all your calendars in one place, saves your files for you, and keeps track of your subscriptions. It writes replies for you to check, and nothing gets sent until you press the button.",
     status: "in-development",
     expectedShip: "Q4 2026",
+    appUrl: "https://mailhandled.ai",
+    access: "invite-only",
     problem:
       "Inboxes mix the few messages that need you with ads, codes, and notifications. Sorting them, remembering the meetings buried inside them, and writing replies eats hours of attention every week.",
     approach:
@@ -76,6 +82,8 @@ export const projects: Project[] = [
       "Planora reads a big construction schedule and explains it in plain words — what's on track, what's late, and what matters most — so you don't need to pay an expensive expert.",
     status: "in-development",
     expectedShip: "Q4 2026",
+    appUrl: "https://planora-chi.vercel.app",
+    access: "invite-only",
     problem:
       "Reading a Primavera P6 or MS Project schedule requires years of domain expertise. Most project teams pay $200/hr consultants to answer questions the data already contains.",
     approach:
