@@ -46,35 +46,12 @@ export const projects: Project[] = [
 
   // ─── In Development ──────────────────────────────────────────────────────
   {
-    slug: "atlas",
-    name: "Atlas",
-    tagline: "Local-first personal RAG for iOS and macOS.",
-    status: "in-development",
-    expectedShip: "Q4 2026",
-    problem:
-      "Your notes, docs, and files are scattered across apps. Finding something you wrote six months ago means remembering exactly where you put it.",
-    approach:
-      "Atlas builds a private, on-device vector index of your personal documents. Ask it anything — it retrieves from your own data, never a cloud.",
-    highlights: [
-      "Fully local — your data never leaves your device",
-      "Indexes notes, PDFs, and documents",
-      "Natural language retrieval",
-      "iOS and macOS native (Swift)",
-    ],
-    ethics: [
-      "Zero cloud dependency for core retrieval",
-      "No training on user data",
-      "Transparent about what is and isn't indexed",
-    ],
-  },
-  {
     slug: "care360",
     name: "Care360",
-    tagline: "Responsible-AI symptom checker — paired study, improved arm.",
+    tagline:
+      "Care360 helps you understand your symptoms and what to do next, while always reminding you to check with a real doctor. It's careful, honest, and never pretends to replace your doctor.",
     status: "in-development",
     expectedShip: "Q4 2026",
-    liveUrl: "https://care360-responsible-ai.vercel.app",
-    screenshot: "/screenshots/care360.png",
     problem:
       "Most AI symptom checkers optimize for engagement, not accuracy or safety. They give confident answers without uncertainty, sources, or appropriate escalation.",
     approach:
@@ -96,87 +73,59 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "storifai",
-    name: "Storifai",
-    tagline: "Three story versions from a single image upload.",
+    slug: "mailhandled",
+    name: "MailHandled",
+    tagline:
+      "Connect as many email accounts as you want. MailHandled reads and sorts your email, puts all your calendars in one place, saves your files for you, and keeps track of your subscriptions. It writes replies for you to check, and nothing gets sent until you press the button.",
     status: "in-development",
     expectedShip: "Q4 2026",
-    liveUrl: "https://storifai-improved.vercel.app",
-    screenshot: "/screenshots/storifai.png",
     problem:
-      "Image captioning models generate generic descriptions. They don't tell stories — and they don't give you creative control.",
+      "Inboxes mix the few messages that need you with ads, codes, and notifications. Sorting them, remembering the meetings buried inside them, and writing replies eats hours of attention every week.",
     approach:
-      "Upload an image. Storifai uses CLIP + Cross-Image Attention + Transformer Decoder to generate three tonally distinct story versions. Built as a CS747 computer vision project with BLEU benchmark evaluation.",
+      "MailHandled is an email chief of staff built on Claude. Connect any number of Gmail and Outlook accounts: it triages every inbox, combines your calendars, files attachments automatically, tracks subscriptions found in your email, writes a daily brief, and drafts replies that wait in an approval queue until you send them.",
     highlights: [
-      "Three story variants per upload (literary, journalistic, imaginative)",
-      "CLIP + Cross-Image Attention + Transformer Decoder architecture",
-      "BLEU score benchmarking against baseline",
-      "CVPR-format research paper",
+      "Connect as many Gmail and Outlook / Microsoft 365 accounts as you want",
+      "Reads and sorts every inbox, with reply drafts waiting for your approval",
+      "All your calendars from every account combined in one view",
+      "Attachments saved to Drive automatically, with links back to the email",
+      "Subscriptions tracked across all your email accounts",
     ],
     ethics: [
-      "Evaluated against a baseline to measure actual improvement",
-      "Transparent about model architecture and limitations",
-      "Research-grade — not production storytelling software",
-    ],
-    artifact: {
-      label: "Read the CS747 paper",
-      href: "/storifai-report.pdf",
-    },
-  },
-  {
-    slug: "qissa",
-    name: "Qissa",
-    tagline: "Personalized children's storybooks in English, Dari, Pashto, and Arabic.",
-    status: "in-development",
-    expectedShip: "Q4 2026",
-    liveUrl: "https://qissa-ivory.vercel.app",
-    screenshot: "/screenshots/qissa.png",
-    problem:
-      "Children's books rarely reflect the cultural backgrounds of multilingual families. Afghan and Arabic-speaking families in the US have almost no personalized options.",
-    approach:
-      "Qissa generates illustrated storybooks personalized to a child's name, interests, and cultural background — in English, Dari, Pashto, and Arabic.",
-    highlights: [
-      "Four language support: English, Dari, Pashto, Arabic",
-      "Culturally aware story generation",
-      "Personalized to the child's name and interests",
-      "Illustrated output",
-    ],
-    ethics: [
-      "Built with cultural sensitivity as a core design requirement",
-      "No child data retained after story generation",
-      "Language choices reflect real underserved communities",
+      "Human-in-the-loop by default: nothing is sent without your approval",
+      "Deliberately limited to email, calendar, and files",
+      "Official platform APIs only, no automation of personal messaging apps",
     ],
   },
   {
-    slug: "dastyar",
-    name: "Dastyar",
-    tagline: "A team of AI agents for email, calendar, social, and daily tasks.",
+    slug: "safeclaw",
+    name: "SafeClaw",
+    tagline:
+      "Open each of your accounts (email, LinkedIn, WhatsApp, X, and more) in a web browser, and SafeClaw reads them for you and takes notes on the things you care about. You can ask it out loud what's new, and it gets a reply ready, but it never sends anything for you.",
     status: "in-development",
     expectedShip: "Q4 2026",
     problem:
-      "Staying on top of multiple inboxes, calendars, and social accounts eats hours of attention every day. Existing AI assistants handle one channel, not your whole life.",
+      "Messages that matter arrive across Gmail, Outlook, LinkedIn, WhatsApp, X, and more. Checking every account for what needs you is constant, scattered work, and most assistants that help ask for broad permission to act on your behalf.",
     approach:
-      "Connect as many accounts as you want, then assemble a team of agents. Each agent owns one job: triaging email, managing the calendar, drafting social posts, or a custom task you describe in plain language. Agents prepare, you approve.",
+      "You open each of your accounts in one web browser, on your Mac or a server of your own. SafeClaw reads them for you and takes notes on what you want to know about, each linked to where it came from. Ask it by voice or text, have a message read to you, and dictate a reply it prepares for you to send yourself.",
     highlights: [
-      "Multiple accounts per channel (Gmail, Outlook, X, LinkedIn, and more)",
-      "Reply drafts and posts wait for your approval, nothing auto-sends",
-      "One daily brief across every connected account",
-      "Create custom agents with a name and a plain-language task",
+      "Watches Gmail, Outlook, LinkedIn, WhatsApp, X, and others in one browser",
+      "Ask by voice or text, with every note linked to its source",
+      "Runs with a model on your Mac, or a cloud model on your own key",
+      "Optional phone view over your private Tailscale network",
     ],
     ethics: [
-      "Human-in-the-loop by default: agents act only with permissions you grant",
-      "Official platform APIs only, no ToS-violating automation",
-      "Connections are separate, revocable permissions",
+      "No mechanism to send, post, like, follow, purchase, or delete",
+      "With a model on your Mac, nothing leaves the device; no telemetry",
+      "Everything it keeps is plain text you can export or delete",
     ],
   },
   {
     slug: "planora",
     name: "Planora",
-    tagline: "Construction schedule analysis. $200/hr consultant replaced.",
+    tagline:
+      "Planora reads a big construction schedule and explains it in plain words — what's on track, what's late, and what matters most — so you don't need to pay an expensive expert.",
     status: "in-development",
     expectedShip: "Q4 2026",
-    liveUrl: "https://planora-chi.vercel.app",
-    screenshot: "/screenshots/planora.png",
     problem:
       "Reading a Primavera P6 or MS Project schedule requires years of domain expertise. Most project teams pay $200/hr consultants to answer questions the data already contains.",
     approach:

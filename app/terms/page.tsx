@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
+import PageHero from "@/components/PageHero";
+import LegalSections from "@/components/LegalSections";
+import Reveal from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
   title: "Terms of Service — MindCue",
@@ -19,30 +22,13 @@ const sections = [
 export default function TermsPage() {
   return (
     <>
-      <section className="bg-navy-900 py-16 sm:py-20">
+      <PageHero eyebrow="MindCue App" title="Terms of Service" description="Last updated: January 1, 2025" />
+      <section className="py-16 sm:py-24">
         <Container>
-          <p className="eyebrow text-white/40 mb-4">MindCue App</p>
-          <h1
-            className="text-4xl mb-3"
-            style={{ fontFamily: "'DM Serif Display', serif", fontWeight: 400, color: "white" }}
-          >
-            Terms of Service
-          </h1>
-          <p className="text-[13px] text-white/40">Last updated: January 1, 2025</p>
-        </Container>
-      </section>
-
-      <section className="py-16 sm:py-20">
-        <Container>
-          <div className="max-w-3xl space-y-6">
-            {sections.map((s) => (
-              <div key={s.title} className="card p-6">
-                <h3 className="text-[15px] font-semibold text-navy-950 mb-3">{s.title}</h3>
-                <p className="text-[14px] leading-relaxed text-warm-600">{s.content}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-10 text-[13px] text-warm-400">MindCue is a product by Hoshmand AI</p>
+          <Reveal className="max-w-3xl">
+            <LegalSections sections={sections} />
+            <p className="mt-10 text-[13px] text-warm-400">MindCue is a product by Hoshmand AI</p>
+          </Reveal>
         </Container>
       </section>
     </>

@@ -1,95 +1,104 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import type { Project } from "@/lib/projects";
 import StatusPill from "./StatusPill";
 import ProjectNotifyForm from "./ProjectNotifyForm";
+import Wordmark from "./Wordmark";
+import Spotlight from "./ui/Spotlight";
 
 export default function InDevCard({ project }: { project: Project }) {
-  const { slug, name, tagline, liveUrl, screenshot, expectedShip } = project;
+  const { slug, name, tagline, liveUrl, highlights } = project;
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <article className="card overflow-hidden group">
-      {/* Screenshot or placeholder */}
-      <div className="relative h-44 w-full bg-warm-200 overflow-hidden">
-        {screenshot ? (
-          <Image
-            src={screenshot}
-            alt={`${name} screenshot`}
-            fill
-            className="object-cover object-top"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <div className="text-center">
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-warm-300">
-                <svg
-                  className="h-5 w-5 text-warm-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 19.5h18M3.75 4.5h16.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75V5.25a.75.75 0 01.75-.75z"
-                  />
-                </svg>
-              </div>
-              <p className="text-[11px] font-medium text-warm-400 uppercase tracking-wider">
-                Screenshot coming soon
-              </p>
-            </div>
-          </div>
-        )}
+    <Spotlight as="article" className="card card-interactive group flex h-full flex-col overflow-hidden">
+      {/* Wordmark banner */}
+      <div className="hero-surface relative flex h-40 items-center justify-center">
+        <Wordmark
+          slug={slug}
+          name={name}
+          className="text-[40px] text-white transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+        />
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div>
-            <h3 className="text-[16px] font-semibold text-navy-950">{name}</h3>
-            <p className="mt-0.5 text-[13px] text-warm-500">{tagline}</p>
-          </div>
+      <div className="relative z-10 flex flex-1 flex-col p-6">
+        <div className="mb-3 flex items-start justify-between gap-3">
+          <h3 className="text-[18px] font-semibold text-navy-950">{name}</h3>
           <StatusPill status="in-development" />
         </div>
+        <p className="text-[14px] leading-relaxed text-warm-600">{tagline}</p>
 
-        {expectedShip && (
-          <p className="text-[11px] font-medium uppercase tracking-wider text-warm-400 mb-4">
-            Expected {expectedShip}
-          </p>
-        )}
-
-        {/* Actions */}
-        <div className="space-y-3 pt-3 border-t border-warm-200">
-          {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#C8963E] hover:text-[#B8862E] transition-colors duration-150"
+        {/* Collapsible highlights */}
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          aria-controls={`highlights-${slug}`}
+          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full py-1 text-[13px] font-semibold text-navy-950 transition-colors hover:text-gold-600"
+        >
+          {expanded ? "Show less" : "What it does"}
+          <motion.svg
+            className="h-3.5 w-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.2}
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+            aria-hidden="true"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </motion.svg>
+        </button>
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.ul
+              id={`highlights-${slug}`}
+              key="list"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ height: { type: "spring", bounce: 0, duration: 0.45 }, opacity: { duration: 0.2 } }}
+              className="overflow-hidden"
             >
+              {highlights.map((h, i) => (
+                <motion.li
+                  key={h}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.4, delay: 0.04 * i }}
+                  className="flex items-start gap-3 pt-3 text-[13.5px] text-warm-600 first:pt-4"
+                >
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
+                  {h}
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+
+        <div className="mt-auto space-y-4 pt-6">
+          <div className="h-px bg-warm-200" />
+          {liveUrl && (
+            <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="arrow-link text-[13px] text-gold-600 hover:text-gold-500">
               View live demo
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
             </a>
           )}
-
           <ProjectNotifyForm slug={slug} />
-
-          <Link
-            href={`/products/${slug}`}
-            className="inline-flex items-center gap-1 text-[12px] text-warm-400 hover:text-navy-950 transition-colors duration-150"
-          >
+          <Link href={`/products/${slug}`} className="arrow-link text-[13px] text-warm-500 hover:text-navy-950">
             Full details
-            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </Link>
         </div>
       </div>
-    </article>
+    </Spotlight>
   );
 }
