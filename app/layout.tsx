@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { site } from "@/lib/site";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MotionProvider from "@/components/motion/MotionProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  keywords: ["AI", "artificial intelligence", "productivity", "MindCue", "PathFinder", "AI ethics", "responsible AI"],
+  keywords: ["AI", "artificial intelligence", "productivity", "MindCue", "Care360", "MailHandled", "SafeClaw", "Planora", "AI ethics", "responsible AI"],
   authors: [{ name: site.founderName }],
   creator: site.founderName,
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg", apple: "/favicon.svg" },
@@ -49,11 +50,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen bg-warm-50 font-sans text-warm-600 antialiased">
-        <div className="relative flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <MotionProvider>
+          <div className="relative flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </MotionProvider>
       </body>
     </html>
   );

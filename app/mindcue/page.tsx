@@ -3,6 +3,9 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SectionTitle from "@/components/SectionTitle";
 import { site } from "@/lib/site";
+import Reveal, { RevealGroup, RevealItem } from "@/components/motion/Reveal";
+import { HeroFade } from "@/components/motion/HeroText";
+import Spotlight from "@/components/ui/Spotlight";
 
 export const metadata: Metadata = {
   title: "MindCue AI — Smart reminders from screenshots",
@@ -55,21 +58,21 @@ export default function MindCuePage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-navy-900 py-20 sm:py-28">
+      <section className="hero-surface -mt-16 pb-24 pt-36 sm:pb-32 sm:pt-44">
         <Container>
-          <div className="flex flex-col items-center text-center">
+          <HeroFade delay={0} className="flex flex-col items-center text-center">
             <div className="mb-8">
               <Image
                 src="/mindcue-logo.png"
                 alt="MindCue AI"
                 width={100}
                 height={100}
-                className="rounded-[24px] shadow-xl"
+                className="rounded-[24px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-rotate-3 hover:scale-105"
               />
             </div>
             <p className="eyebrow text-white/40 mb-4">iOS App · Free to Download</p>
             <h1
-              className="max-w-2xl text-4xl sm:text-5xl mb-5"
+              className="display mb-6 max-w-3xl"
               style={{ fontFamily: "'DM Serif Display', serif", fontWeight: 400, color: "white" }}
             >
               Turn your screenshots into actions
@@ -83,8 +86,7 @@ export default function MindCuePage() {
               href={site.mindcueAppStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 rounded-lg border border-white/15 bg-white/8 px-6 py-3.5 transition-colors hover:bg-white/12"
-              style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
+              className="inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.08] px-6 py-3.5 backdrop-blur transition-[background-color,transform] duration-200 hover:bg-white/[0.14] active:scale-[0.97]"
             >
               <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.05 14.5c-.03-3.04 2.49-4.52 2.6-4.59-1.42-2.07-3.62-2.35-4.4-2.38-1.87-.19-3.65 1.1-4.6 1.1-.95 0-2.41-1.08-3.97-1.05-2.04.03-3.92 1.18-4.97 3-2.13 3.69-.55 9.15 1.53 12.14 1.01 1.46 2.21 3.1 3.79 3.04 1.52-.06 2.1-.98 3.94-.98 1.84 0 2.37.98 3.99.95 1.63-.03 2.67-1.49 3.67-2.96.8-1.14 1.35-2.4 1.7-3.72-3.72-1.42-3.72-6.56-.28-7.55zM14.1 5.04c.84-1.02 1.41-2.44 1.25-3.86-1.21.05-2.67.81-3.54 1.83-.77.89-1.45 2.31-1.27 3.67 1.35.1 2.73-.68 3.56-1.64z" fill="white"/>
@@ -96,7 +98,7 @@ export default function MindCuePage() {
             </a>
 
             <p className="mt-4 text-[12px] text-white/35">Free · Available on iPhone · iOS 16+</p>
-          </div>
+          </HeroFade>
         </Container>
       </section>
 
@@ -111,16 +113,16 @@ export default function MindCuePage() {
 
           <div className="mt-16 space-y-20">
             {features.map((feature, index) => (
-              <div
+              <Reveal
                 key={feature.title}
-                className={`flex flex-col items-center gap-12 lg:flex-row ${
+                className={`flex flex-col items-center gap-12 lg:flex-row lg:gap-20 ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}
               >
                 {/* Phone */}
                 <div className="flex-shrink-0">
                   <div className="relative mx-auto w-[240px] sm:w-[260px]">
-                    <div className="relative overflow-hidden rounded-[2.5rem] border-[7px] border-warm-300 bg-warm-200 shadow-lg">
+                    <div className="relative overflow-hidden rounded-[2.75rem] border-[8px] border-navy-950 bg-navy-950 shadow-[0_40px_80px_-24px_rgba(10,22,40,0.45)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2">
                       <Image
                         src={feature.image}
                         alt={feature.title}
@@ -145,7 +147,7 @@ export default function MindCuePage() {
                     {feature.description}
                   </p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -159,23 +161,27 @@ export default function MindCuePage() {
             title="Designed for focus"
             description="Every feature is built to reduce cognitive load — not increase it."
           />
-          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+          <RevealGroup className="mt-12 grid gap-5 sm:grid-cols-3">
             {additionalFeatures.map((feature) => (
-              <div key={feature.title} className="card p-6">
-                <div className="mb-4 h-0.5 w-8 rounded-full bg-gold-500" />
-                <h3 className="text-[15px] font-semibold text-navy-950 mb-2">{feature.title}</h3>
-                <p className="text-[13.5px] leading-relaxed text-warm-500">{feature.description}</p>
-              </div>
+              <RevealItem key={feature.title} className="h-full">
+                <Spotlight className="card card-interactive group h-full p-7">
+                  <div className="relative z-10">
+                    <div className="mb-5 h-0.5 w-8 rounded-full bg-gold-500 transition-all duration-500 group-hover:w-14" />
+                    <h3 className="mb-2 text-[16px] font-semibold text-navy-950">{feature.title}</h3>
+                    <p className="text-[14px] leading-relaxed text-warm-500">{feature.description}</p>
+                  </div>
+                </Spotlight>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </Container>
       </section>
 
       {/* Download CTA */}
       <section className="py-20 sm:py-24">
         <Container>
-          <div className="mx-auto max-w-2xl">
-            <div className="card p-8 sm:p-10 text-center bg-warm-50">
+          <Reveal className="mx-auto max-w-2xl">
+            <div className="card p-10 text-center sm:p-14">
               <div className="mx-auto mb-6 w-14">
                 <Image
                   src="/mindcue-logo.png"
@@ -201,7 +207,7 @@ export default function MindCuePage() {
                   href={site.mindcueAppStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 rounded-lg bg-navy-900 px-6 py-3.5 transition-colors hover:bg-navy-800"
+                  className="inline-flex items-center gap-3 rounded-2xl bg-navy-900 px-6 py-3.5 transition-[background-color,transform] duration-200 hover:bg-navy-800 active:scale-[0.97]"
                 >
                   <svg width="22" height="26" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.05 14.5c-.03-3.04 2.49-4.52 2.6-4.59-1.42-2.07-3.62-2.35-4.4-2.38-1.87-.19-3.65 1.1-4.6 1.1-.95 0-2.41-1.08-3.97-1.05-2.04.03-3.92 1.18-4.97 3-2.13 3.69-.55 9.15 1.53 12.14 1.01 1.46 2.21 3.1 3.79 3.04 1.52-.06 2.1-.98 3.94-.98 1.84 0 2.37.98 3.99.95 1.63-.03 2.67-1.49 3.67-2.96.8-1.14 1.35-2.4 1.7-3.72-3.72-1.42-3.72-6.56-.28-7.55zM14.1 5.04c.84-1.02 1.41-2.44 1.25-3.86-1.21.05-2.67.81-3.54 1.83-.77.89-1.45 2.31-1.27 3.67 1.35.1 2.73-.68 3.56-1.64z" fill="white"/>
@@ -214,7 +220,7 @@ export default function MindCuePage() {
                 <p className="text-[12px] text-warm-400">Free · iPhone · iOS 16+</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>
