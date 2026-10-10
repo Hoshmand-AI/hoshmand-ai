@@ -76,18 +76,19 @@ export const projects: Project[] = [
     slug: "mailhandled",
     name: "MailHandled",
     tagline:
-      "MailHandled reads your email, tells you which messages need you, and writes replies for you to check. Nothing gets sent until you press the button.",
+      "Connect as many email accounts as you want. MailHandled reads and sorts your email, puts all your calendars in one place, saves your files for you, and keeps track of your subscriptions. It writes replies for you to check, and nothing gets sent until you press the button.",
     status: "in-development",
     expectedShip: "Q4 2026",
     problem:
       "Inboxes mix the few messages that need you with ads, codes, and notifications. Sorting them, remembering the meetings buried inside them, and writing replies eats hours of attention every week.",
     approach:
-      "MailHandled is an email chief of staff built on Claude. It triages Gmail and Outlook inboxes, captures calendar events and attachments, writes a daily brief, and drafts replies that wait in an approval queue until you send them.",
+      "MailHandled is an email chief of staff built on Claude. Connect any number of Gmail and Outlook accounts: it triages every inbox, combines your calendars, files attachments automatically, tracks subscriptions found in your email, writes a daily brief, and drafts replies that wait in an approval queue until you send them.",
     highlights: [
-      "Gmail and Outlook / Microsoft 365 triage with labels",
-      "Reply drafts and calendar events wait in an approval queue",
-      "One daily brief across every connected account",
-      "Attachments filed to Drive with links back to the email",
+      "Connect as many Gmail and Outlook / Microsoft 365 accounts as you want",
+      "Reads and sorts every inbox, with reply drafts waiting for your approval",
+      "All your calendars from every account combined in one view",
+      "Attachments saved to Drive automatically, with links back to the email",
+      "Subscriptions tracked across all your email accounts",
     ],
     ethics: [
       "Human-in-the-loop by default: nothing is sent without your approval",
