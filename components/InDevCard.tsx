@@ -1,65 +1,39 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Project } from "@/lib/projects";
 import StatusPill from "./StatusPill";
 import ProjectNotifyForm from "./ProjectNotifyForm";
 
+// Wordmark split per the brand system: bold first part + gold serif second part.
+const WORDMARK_SPLIT: Record<string, [string, string]> = {
+  care360: ["Care", "360"],
+  mailhandled: ["Mail", "Handled"],
+  safeclaw: ["Safe", "Claw"],
+  planora: ["Plan", "ora"],
+};
+
 export default function InDevCard({ project }: { project: Project }) {
-  const { slug, name, tagline, liveUrl, screenshot, expectedShip } = project;
+  const { slug, name, tagline, liveUrl } = project;
+  const [first, second] = WORDMARK_SPLIT[slug] ?? [name, ""];
 
   return (
-    <article className="card overflow-hidden group">
-      {/* Screenshot or placeholder */}
-      <div className="relative h-44 w-full bg-warm-200 overflow-hidden">
-        {screenshot ? (
-          <Image
-            src={screenshot}
-            alt={`${name} screenshot`}
-            fill
-            className="object-cover object-top"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <div className="text-center">
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-warm-300">
-                <svg
-                  className="h-5 w-5 text-warm-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 19.5h18M3.75 4.5h16.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75V5.25a.75.75 0 01.75-.75z"
-                  />
-                </svg>
-              </div>
-              <p className="text-[11px] font-medium text-warm-400 uppercase tracking-wider">
-                Screenshot coming soon
-              </p>
-            </div>
-          </div>
-        )}
+    <article className="card overflow-hidden">
+      {/* Wordmark banner */}
+      <div className="flex h-36 w-full items-center justify-center bg-navy-900">
+        <p className="text-[36px] leading-none text-white" aria-hidden="true">
+          <span className="font-bold">{first}</span>
+          <span className="font-serif text-gold-400">{second}</span>
+        </p>
       </div>
 
       {/* Content */}
       <div className="p-5">
-        <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex items-start justify-between gap-3 mb-4">
           <div>
             <h3 className="text-[16px] font-semibold text-navy-950">{name}</h3>
-            <p className="mt-0.5 text-[13px] text-warm-500">{tagline}</p>
+            <p className="mt-1 text-[13px] leading-relaxed text-warm-500">{tagline}</p>
           </div>
           <StatusPill status="in-development" />
         </div>
-
-        {expectedShip && (
-          <p className="text-[11px] font-medium uppercase tracking-wider text-warm-400 mb-4">
-            Expected {expectedShip}
-          </p>
-        )}
 
         {/* Actions */}
         <div className="space-y-3 pt-3 border-t border-warm-200">

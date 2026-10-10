@@ -32,7 +32,7 @@ export default function ProductsPage() {
             What we're shipping and building.
           </h1>
           <p className="max-w-xl text-[15px] text-white/50">
-            One product live. Six in active development. Every one grounded in
+            One product live. Four in active development. Every one grounded in
             responsible AI principles.
           </p>
         </Container>
@@ -106,11 +106,6 @@ export default function ProductsPage() {
             </span>
           </div>
 
-          <p className="text-[14px] text-warm-500 mb-10 max-w-xl">
-            These are real, working projects — not vaporware. Each has a live
-            demo you can try. They're flagged as experimental because they're
-            research-grade, not production-ready.
-          </p>
 
           <div className="grid gap-6 lg:grid-cols-2">
             {inDev.map((p) => (
