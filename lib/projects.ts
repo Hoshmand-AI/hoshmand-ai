@@ -46,33 +46,6 @@ export const projects: Project[] = [
 
   // ─── In Development ──────────────────────────────────────────────────────
   {
-    slug: "care360",
-    name: "Care360",
-    tagline:
-      "Care360 helps you understand your symptoms and what to do next, while always reminding you to check with a real doctor. It's careful, honest, and never pretends to replace your doctor.",
-    status: "in-development",
-    expectedShip: "Q4 2026",
-    problem:
-      "Most AI symptom checkers optimize for engagement, not accuracy or safety. They give confident answers without uncertainty, sources, or appropriate escalation.",
-    approach:
-      "Care360 is the improved arm of a paired study comparing responsible vs. irresponsible AI design in healthcare. It surfaces uncertainty, cites sources, and always recommends professional care when appropriate.",
-    highlights: [
-      "Uncertainty quantification on every response",
-      "Source citations for medical claims",
-      "Clear escalation prompts when symptoms are serious",
-      "Paired study design — benchmarked against a baseline",
-    ],
-    ethics: [
-      "Built as a research project — not a replacement for professional care",
-      "Paired with an irresponsible baseline to demonstrate the stakes of AI design choices",
-      "Final project for GMU Ethics of AI",
-    ],
-    artifact: {
-      label: "Read the GMU Ethics of AI report",
-      href: "/care360-report.pdf",
-    },
-  },
-  {
     slug: "mailhandled",
     name: "MailHandled",
     tagline:
@@ -94,6 +67,29 @@ export const projects: Project[] = [
       "Human-in-the-loop by default: nothing is sent without your approval",
       "Deliberately limited to email, calendar, and files",
       "Official platform APIs only, no automation of personal messaging apps",
+    ],
+  },
+  {
+    slug: "planora",
+    name: "Planora",
+    tagline:
+      "Planora reads a big construction schedule and explains it in plain words — what's on track, what's late, and what matters most — so you don't need to pay an expensive expert.",
+    status: "in-development",
+    expectedShip: "Q4 2026",
+    problem:
+      "Reading a Primavera P6 or MS Project schedule requires years of domain expertise. Most project teams pay $200/hr consultants to answer questions the data already contains.",
+    approach:
+      "Upload a schedule. Planora parses it, identifies the critical path, flags variance, and answers natural-language questions — built by a 13-year construction scheduling professional who managed schedules at Meta, USPS, and Applied Digital.",
+    highlights: [
+      "Primavera P6 and MS Project support",
+      "Critical path identification",
+      "Schedule variance analysis",
+      "Natural language Q&A over your schedule",
+    ],
+    ethics: [
+      "Built by a domain expert — not a generalist AI wrapping P6 docs",
+      "Transparent about what the model can and cannot infer",
+      "Experimental — not a substitute for professional schedule review",
     ],
   },
   {
@@ -120,27 +116,31 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "planora",
-    name: "Planora",
+    slug: "care360",
+    name: "Care360",
     tagline:
-      "Planora reads a big construction schedule and explains it in plain words — what's on track, what's late, and what matters most — so you don't need to pay an expensive expert.",
+      "Care360 helps you understand your symptoms and what to do next, while always reminding you to check with a real doctor. It's careful, honest, and never pretends to replace your doctor.",
     status: "in-development",
     expectedShip: "Q4 2026",
     problem:
-      "Reading a Primavera P6 or MS Project schedule requires years of domain expertise. Most project teams pay $200/hr consultants to answer questions the data already contains.",
+      "Most AI symptom checkers optimize for engagement, not accuracy or safety. They give confident answers without uncertainty, sources, or appropriate escalation.",
     approach:
-      "Upload a schedule. Planora parses it, identifies the critical path, flags variance, and answers natural-language questions — built by a 13-year construction scheduling professional who managed schedules at Meta, USPS, and Applied Digital.",
+      "Care360 is the improved arm of a paired study comparing responsible vs. irresponsible AI design in healthcare. It surfaces uncertainty, cites sources, and always recommends professional care when appropriate.",
     highlights: [
-      "Primavera P6 and MS Project support",
-      "Critical path identification",
-      "Schedule variance analysis",
-      "Natural language Q&A over your schedule",
+      "Uncertainty quantification on every response",
+      "Source citations for medical claims",
+      "Clear escalation prompts when symptoms are serious",
+      "Paired study design — benchmarked against a baseline",
     ],
     ethics: [
-      "Built by a domain expert — not a generalist AI wrapping P6 docs",
-      "Transparent about what the model can and cannot infer",
-      "Experimental — not a substitute for professional schedule review",
+      "Built as a research project — not a replacement for professional care",
+      "Paired with an irresponsible baseline to demonstrate the stakes of AI design choices",
+      "Final project for GMU Ethics of AI",
     ],
+    artifact: {
+      label: "Read the GMU Ethics of AI report",
+      href: "/care360-report.pdf",
+    },
   },
 ];
 
