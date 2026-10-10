@@ -100,13 +100,13 @@ export const projects: Project[] = [
     slug: "safeclaw",
     name: "SafeClaw",
     tagline:
-      "SafeClaw watches the email and message apps you already have open on your Mac and keeps a short list of what needs you. You can ask it out loud what's new, and it gets a reply ready, but it never sends anything for you.",
+      "Open each of your accounts (email, LinkedIn, WhatsApp, X, and more) in a web browser, and SafeClaw reads them for you and takes notes on the things you care about. You can ask it out loud what's new, and it gets a reply ready, but it never sends anything for you.",
     status: "in-development",
     expectedShip: "Q4 2026",
     problem:
       "Messages that matter arrive across Gmail, Outlook, LinkedIn, WhatsApp, X, and more. Checking every account for what needs you is constant, scattered work, and most assistants that help ask for broad permission to act on your behalf.",
     approach:
-      "SafeClaw reads the accounts you keep open in one browser on your Mac and keeps a short list of notes, each linked to where it came from. Ask it by voice or text, have a message read to you, and dictate a reply it prepares for you to send yourself.",
+      "You open each of your accounts in one web browser, on your Mac or a server of your own. SafeClaw reads them for you and takes notes on what you want to know about, each linked to where it came from. Ask it by voice or text, have a message read to you, and dictate a reply it prepares for you to send yourself.",
     highlights: [
       "Watches Gmail, Outlook, LinkedIn, WhatsApp, X, and others in one browser",
       "Ask by voice or text, with every note linked to its source",
