@@ -9,9 +9,10 @@ import ProjectNotifyForm from "./ProjectNotifyForm";
 import Wordmark from "./Wordmark";
 import Spotlight from "./ui/Spotlight";
 import AccessNote from "./AccessNote";
+import InstagramLink from "./InstagramLink";
 
 export default function InDevCard({ project }: { project: Project }) {
-  const { slug, name, tagline, liveUrl, highlights, appUrl, access } = project;
+  const { slug, name, tagline, liveUrl, highlights, appUrl, access, accessNote, updatesUrl } = project;
   const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
   const [expanded, setExpanded] = useState(false);
 
@@ -131,10 +132,15 @@ export default function InDevCard({ project }: { project: Project }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                   </svg>
                 </a>
-                {access === "invite-only" && <AccessNote />}
+                {access === "invite-only" && <AccessNote label={accessNote} />}
               </div>
               {access === "invite-only" && (
                 <ProjectNotifyForm slug={slug} label="No invite yet? Join the waitlist" variant="secondary" />
+              )}
+              {updatesUrl && (
+                <div>
+                  <InstagramLink href={updatesUrl} label={`See ${name} on Instagram`} />
+                </div>
               )}
             </>
           ) : (

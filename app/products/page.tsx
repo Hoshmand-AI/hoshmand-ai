@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
 import PageHero from "@/components/PageHero";
-import ProductCard from "@/components/ProductCard";
 import InDevCard from "@/components/InDevCard";
 import Reveal, { RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { site } from "@/lib/site";
-import { getShippingProjects, getInDevProjects } from "@/lib/projects";
+import { getInDevProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Products",
-  description: "AI products built by Hoshmand AI — shipping and in development.",
+  description: "AI products built by Hoshmand AI.",
 };
 
 function SectionHeading({ title, count, tone }: { title: string; count: string; tone: "green" | "gold" }) {
@@ -32,38 +31,18 @@ function SectionHeading({ title, count, tone }: { title: string; count: string; 
 }
 
 export default function ProductsPage() {
-  const shipping = getShippingProjects();
   const inDev = getInDevProjects();
 
   return (
     <>
       <PageHero
         eyebrow="Products"
-        title="What we're shipping and building."
-        description="One product live. Four in active development. Every one grounded in responsible AI principles."
+        title="What we're building."
+        description="Three products in development, two in private beta. Every one grounded in responsible AI principles."
       />
 
-      <section className="py-20 sm:py-28">
-        <Container>
-          <SectionHeading title="Shipping" count={`${shipping.length} live`} tone="green" />
-          <div className="grid gap-6">
-            {shipping.map((p) => (
-              <Reveal key={p.slug}>
-                <ProductCard
-                  title={p.name}
-                  tagline={p.tagline}
-                  status="Available on iOS"
-                  href={p.customPage ? `/${p.slug}` : `/products/${p.slug}`}
-                  appStoreUrl={p.appStoreUrl}
-                  bullets={p.highlights}
-                />
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
 
-      <section className="border-t border-warm-200 bg-warm-100 py-20 sm:py-28">
+      <section className="bg-warm-100 py-20 sm:py-28">
         <Container>
           <SectionHeading title="In Development" count={`${inDev.length} active`} tone="gold" />
           <RevealGroup className="grid gap-6 md:grid-cols-2">

@@ -7,6 +7,7 @@ import ProjectNotifyForm from "@/components/ProjectNotifyForm";
 import ProjectTabs from "@/components/ProjectTabs";
 import Wordmark from "@/components/Wordmark";
 import AccessNote from "@/components/AccessNote";
+import InstagramLink from "@/components/InstagramLink";
 import HeroText, { HeroFade } from "@/components/motion/HeroText";
 import Reveal from "@/components/motion/Reveal";
 import { getProject, projects } from "@/lib/projects";
@@ -37,7 +38,7 @@ export default function ProjectDetailPage({ params }: Props) {
   if (!project) notFound();
   if (project.customPage) redirect(`/${project.slug}`);
 
-  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access } = project;
+  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access, accessNote, updatesUrl } = project;
   const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
 
   // Neighbours for the "next product" footer.
@@ -80,9 +81,14 @@ export default function ProjectDetailPage({ params }: Props) {
                     </a>
                     <span className="flex flex-col gap-0.5">
                       <span className="text-[13px] font-medium text-white/70">{appHost}</span>
-                      {access === "invite-only" && <AccessNote tone="dark" />}
+                      {access === "invite-only" && <AccessNote tone="dark" label={accessNote} />}
                     </span>
                   </div>
+                  {updatesUrl && (
+                    <div className="mt-5">
+                      <InstagramLink href={updatesUrl} tone="dark" label={`See ${name} on Instagram`} />
+                    </div>
+                  )}
                 </HeroFade>
               )}
               {status === "in-development" && (
@@ -176,6 +182,12 @@ export default function ProjectDetailPage({ params }: Props) {
                     : "No spam. One email when it's ready."}
                 </p>
                 <ProjectNotifyForm slug={slug} startOpen />
+                {updatesUrl && (
+                  <div className="mt-5 border-t border-warm-200 pt-4">
+                    <p className="text-[13px] text-warm-500">The latest post, reel and story are on Instagram.</p>
+                    <div className="mt-2"><InstagramLink href={updatesUrl} /></div>
+                  </div>
+                )}
               </div>
             </Reveal>
           </div>

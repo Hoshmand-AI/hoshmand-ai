@@ -71,6 +71,14 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-5">
               <a
+                href={site.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] text-white/40 transition-colors duration-200 hover:text-white"
+              >
+                Instagram
+              </a>
+              <a
                 href={site.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"

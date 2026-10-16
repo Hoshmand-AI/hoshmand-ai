@@ -11,6 +11,10 @@ export interface Project {
   appUrl?: string;
   /** Who can get in once they open appUrl. */
   access?: "invite-only";
+  /** Overrides the default "Invite-only beta" note next to the Open button. */
+  accessNote?: string;
+  /** Where we post updates about this product (e.g. the Instagram page). */
+  updatesUrl?: string;
   appStoreUrl?: string;
   screenshot?: string;
   problem: string;
@@ -22,31 +26,6 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // ─── Shipping ────────────────────────────────────────────────────────────
-  {
-    slug: "mindcue",
-    name: "MindCue AI",
-    tagline: "Smart reminders from screenshots.",
-    status: "shipping",
-    appStoreUrl: "https://apps.apple.com/us/app/mindcue-ai/id6757585894",
-    problem:
-      "Screenshots pile up silently. You capture something intending to act on it, then forget it exists.",
-    approach:
-      "MindCue reads your screenshots with on-device AI, extracts the intent, and schedules staggered reminders that link back to the right app or action.",
-    highlights: [
-      "AI-powered screenshot understanding",
-      "Staggered reminder follow-ups (no pileups)",
-      "Deep links to apps and actions",
-      "Full-screen reminder experience",
-      "Privacy-minded defaults",
-    ],
-    ethics: [
-      "On-device processing keeps your screenshots private",
-      "No account required to use core features",
-      "Designed to reduce notification fatigue, not add to it",
-    ],
-    customPage: true,
-  },
 
   // ─── In Development ──────────────────────────────────────────────────────
   {
@@ -58,6 +37,8 @@ export const projects: Project[] = [
     expectedShip: "Q4 2026",
     appUrl: "https://mailhandled.ai",
     access: "invite-only",
+    accessNote: "Private beta · invite only during Google verification",
+    updatesUrl: "https://www.instagram.com/hoshmand.ai.studio/",
     problem:
       "Inboxes mix the few messages that need you with ads, codes, and notifications. Sorting them, remembering the meetings buried inside them, and writing replies eats hours of attention every week.",
     approach:
@@ -122,33 +103,6 @@ export const projects: Project[] = [
       "With a model on your Mac, nothing leaves the device; no telemetry",
       "Everything it keeps is plain text you can export or delete",
     ],
-  },
-  {
-    slug: "care360",
-    name: "Care360",
-    tagline:
-      "Care360 helps you understand your symptoms and what to do next, while always reminding you to check with a real doctor. It's careful, honest, and never pretends to replace your doctor.",
-    status: "in-development",
-    expectedShip: "Q4 2026",
-    problem:
-      "Most AI symptom checkers optimize for engagement, not accuracy or safety. They give confident answers without uncertainty, sources, or appropriate escalation.",
-    approach:
-      "Care360 is the improved arm of a paired study comparing responsible vs. irresponsible AI design in healthcare. It surfaces uncertainty, cites sources, and always recommends professional care when appropriate.",
-    highlights: [
-      "Uncertainty quantification on every response",
-      "Source citations for medical claims",
-      "Clear escalation prompts when symptoms are serious",
-      "Paired study design — benchmarked against a baseline",
-    ],
-    ethics: [
-      "Built as a research project — not a replacement for professional care",
-      "Paired with an irresponsible baseline to demonstrate the stakes of AI design choices",
-      "Final project for GMU Ethics of AI",
-    ],
-    artifact: {
-      label: "Read the GMU Ethics of AI report",
-      href: "/care360-report.pdf",
-    },
   },
 ];
 
