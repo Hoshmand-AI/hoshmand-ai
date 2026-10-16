@@ -64,8 +64,10 @@ export default function Home() {
     appStoreUrl: p.appStoreUrl,
     appUrl: p.appUrl,
     access: p.access,
+    accessNote: p.accessNote,
+    updatesUrl: p.updatesUrl,
   }));
-  const shippingCount = projects.filter((p) => p.status === "shipping").length;
+  const betaCount = projects.filter((p) => p.access === "invite-only").length;
 
   return (
     <>
@@ -109,7 +111,7 @@ export default function Home() {
           <RevealGroup className="grid grid-cols-2 divide-warm-200 py-10 sm:grid-cols-4 sm:divide-x">
             {[
               { num: String(projects.length), label: "Products" },
-              { num: String(shippingCount), label: "On the App Store" },
+              { num: String(betaCount), label: "In private beta" },
               { num: "2026", label: "Founded" },
               { num: "Virginia", label: "Based in" },
             ].map((s) => (
@@ -129,7 +131,7 @@ export default function Home() {
             align="center"
             eyebrow="Products"
             title="What we're building."
-            description="One app on the App Store, four in active development. Tap through to see each one."
+            description="Three products in development, two already in private beta. Tap through to see each one."
           />
           <Reveal className="mt-12" delay={0.1}>
             <ProductShowcase products={showcase} />

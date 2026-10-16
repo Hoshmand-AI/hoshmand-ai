@@ -8,6 +8,7 @@ import SegmentedControl from "../ui/SegmentedControl";
 import Wordmark from "../Wordmark";
 import StatusPill from "../StatusPill";
 import AccessNote from "../AccessNote";
+import InstagramLink from "../InstagramLink";
 
 export interface ShowcaseProduct {
   slug: string;
@@ -19,6 +20,8 @@ export interface ShowcaseProduct {
   appStoreUrl?: string;
   appUrl?: string;
   access?: "invite-only";
+  accessNote?: string;
+  updatesUrl?: string;
 }
 
 // Interactive product switcher: pick a product, the stage slides in the direction you moved.
@@ -118,7 +121,8 @@ export default function ProductShowcase({ products }: { products: ShowcaseProduc
                 ) : (
                   <Link href={product.href} className="btn-primary">Join the waitlist</Link>
                 )}
-                {product.access === "invite-only" && <AccessNote />}
+                {product.access === "invite-only" && <AccessNote label={product.accessNote} />}
+                {product.updatesUrl && <InstagramLink href={product.updatesUrl} label="Instagram" />}
                 <Link href={product.href} className="arrow-link text-[13.5px] text-warm-600 hover:text-navy-950">
                   Learn more
                   <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

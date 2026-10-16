@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const topics = [
-  { title: "Product support", desc: "Questions, issues, or feedback about MindCue or any of our products in development. Include your device and app version if something isn't working." },
+  { title: "Product support", desc: "Questions, issues, or feedback about MailHandled, Planora, or SafeClaw. Include your browser and what you were doing if something isn't working." },
   { title: "Partnerships", desc: "Integration opportunities, distribution, or co-marketing. Tell us a little about your organization and what you have in mind." },
   { title: "Press & media", desc: "Interviews, coverage, or product information requests. We're happy to share background on our products and our approach to responsible AI." },
   { title: "General", desc: "Anything else — we're happy to hear from you." },

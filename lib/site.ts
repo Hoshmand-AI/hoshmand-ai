@@ -5,6 +5,8 @@ export const site = {
   supportEmail: "support@hoshmand.ai",
   founderName: "Ahmad Nesar Sediqzada",
   linkedinUrl: "https://linkedin.com/in/ahmadsediqzada",
+  instagramUrl: "https://www.instagram.com/hoshmand.ai.studio/",
+  instagramHandle: "@hoshmand.ai.studio",
   description:
     "Hoshmand AI is an independent AI studio building responsible, human-centered products that reduce cognitive load and help people follow through.",
   tagline: "Responsible AI, built to turn digital clutter into action.",

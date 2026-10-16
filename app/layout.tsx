@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  keywords: ["AI", "artificial intelligence", "productivity", "MindCue", "Care360", "MailHandled", "SafeClaw", "Planora", "AI ethics", "responsible AI"],
+  keywords: ["AI", "artificial intelligence", "productivity", "MailHandled", "SafeClaw", "Planora", "AI ethics", "responsible AI"],
   authors: [{ name: site.founderName }],
   creator: site.founderName,
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg", apple: "/favicon.svg" },
