@@ -7,6 +7,7 @@ import Spotlight from "@/components/ui/Spotlight";
 import CountUp from "@/components/ui/CountUp";
 import ProductShowcase from "@/components/home/ProductShowcase";
 import Steps from "@/components/home/Steps";
+import MorphStage from "@/components/home/MorphStage";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
 
@@ -72,9 +73,10 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="hero-surface -mt-16 pb-28 pt-40 sm:pb-36 sm:pt-48">
+      <section className="hero-surface -mt-16 pb-24 pt-36 sm:pb-32 sm:pt-44">
         <Container>
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-8">
+          <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
             <HeroFade delay={0}>
               <span className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[12px] font-medium text-white/70 backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
@@ -83,16 +85,16 @@ export default function Home() {
             </HeroFade>
             <HeroText
               text="Responsible AI, built to turn digital clutter into action."
-              className="display !text-white"
+              className="display !text-white lg:!text-[3.9rem]"
               delay={0.1}
             />
             <HeroFade delay={0.55}>
-              <p className="mx-auto mt-7 max-w-2xl text-[17px] leading-relaxed text-white/60 sm:text-[19px]">
+              <p className="mx-auto mt-7 max-w-xl text-[17px] leading-relaxed text-white/60 sm:text-[18px] lg:mx-0">
                 {site.name} designs and ships practical AI products that reduce cognitive load and help people follow through — grounded in the principles of responsible, ethical AI.
               </p>
             </HeroFade>
             <HeroFade delay={0.7}>
-              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
                 <Link href="/products" className="btn-primary !h-12 !px-7 text-[15px]">
                   Explore products {arrow}
                 </Link>
@@ -101,6 +103,10 @@ export default function Home() {
                 </Link>
               </div>
             </HeroFade>
+          </div>
+          <HeroFade delay={0.45}>
+            <MorphStage />
+          </HeroFade>
           </div>
         </Container>
       </section>
