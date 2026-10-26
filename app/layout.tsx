@@ -4,6 +4,7 @@ import { site } from "@/lib/site";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
+import ScrollProgress from "@/components/motion/ScrollProgress";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen bg-warm-50 font-sans text-warm-600 antialiased">
         <MotionProvider>
+          <ScrollProgress />
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
             <main className="flex-1">{children}</main>
