@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import LogoMark from "./LogoMark";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "./Container";
 import { site, navigation } from "@/lib/site";
@@ -47,13 +47,7 @@ export default function Navbar() {
             }`}
           >
             <Link href="/" className="group flex items-center gap-2.5" aria-label={`${site.name} home`}>
-              <Image
-                src="/hoshmand-icon.png"
-                alt=""
-                width={28}
-                height={28}
-                className="rounded-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-[-6deg] group-active:scale-90"
-              />
+              <LogoMark size={30} className="transition-transform duration-300 group-active:scale-90" />
               <span className="font-serif text-xl tracking-tight text-white">{site.name}</span>
             </Link>
 

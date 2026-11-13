@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
 import ScrollProgress from "@/components/motion/ScrollProgress";
+import Guide from "@/components/guide/Guide";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <Guide />
         </MotionProvider>
       </body>
     </html>

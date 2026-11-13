@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import LogoMark from "./LogoMark";
 import Container from "./Container";
 import { site, navigation } from "@/lib/site";
 import { projects } from "@/lib/projects";
@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="mb-3 flex items-center gap-2.5">
-                <Image src="/hoshmand-icon.png" alt="" width={24} height={24} className="rounded-md" />
+                <LogoMark size={26} />
                 <span className="font-serif text-lg text-white">{site.name}</span>
               </div>
               <p className="max-w-xs text-[13px] leading-relaxed text-white/40">
