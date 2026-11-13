@@ -9,6 +9,8 @@ import Wordmark from "../Wordmark";
 import StatusPill from "../StatusPill";
 import AccessNote from "../AccessNote";
 import InstagramLink from "../InstagramLink";
+import ProductLogo from "../live/ProductLogo";
+import LiveStamp from "../live/LiveStamp";
 
 export interface ShowcaseProduct {
   slug: string;
@@ -22,6 +24,11 @@ export interface ShowcaseProduct {
   access?: "invite-only";
   accessNote?: string;
   updatesUrl?: string;
+  /** The product's own mark, from its live card. */
+  logo?: string;
+  /** Its newest update, from its live card. */
+  latest?: string;
+  syncedAt?: string;
 }
 
 // Interactive product switcher: pick a product, the stage slides in the direction you moved.
@@ -75,6 +82,15 @@ export default function ProductShowcase({ products }: { products: ShowcaseProduc
                   <Image src="/mindcue-logo.png" alt="" width={84} height={84} className="rounded-[20px] shadow-2xl" />
                 </motion.div>
               )}
+              {product.logo && (
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", bounce: 0.3, duration: 0.7, delay: 0.1 }}
+                >
+                  <ProductLogo src={product.logo} size={76} className="drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)]" />
+                </motion.div>
+              )}
               <motion.div
                 initial={{ y: 16, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -90,6 +106,11 @@ export default function ProductShowcase({ products }: { products: ShowcaseProduc
                 <StatusPill status={product.status} />
               </div>
               <p className="text-[16px] leading-relaxed text-warm-600">{product.tagline}</p>
+              {product.latest && (
+                <p className="mt-4 rounded-xl bg-warm-100 px-3.5 py-2.5 text-[13px] text-warm-600">
+                  <span className="font-semibold text-navy-950">New:</span> {product.latest}
+                </p>
+              )}
               <ul className="mt-6 space-y-3">
                 {product.highlights.slice(0, 4).map((h, i) => (
                   <motion.li
@@ -106,6 +127,9 @@ export default function ProductShowcase({ products }: { products: ShowcaseProduc
                   </motion.li>
                 ))}
               </ul>
+              {product.syncedAt && product.appUrl && (
+                <LiveStamp syncedAt={product.syncedAt} source={product.appUrl.replace(/^https?:\/\//, "")} className="mt-5" />
+              )}
               <div className="mt-auto flex flex-wrap items-center gap-4 pt-8">
                 {product.appStoreUrl ? (
                   <a href={product.appStoreUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">

@@ -2,12 +2,13 @@ import Link from "next/link";
 import LogoMark from "./LogoMark";
 import Container from "./Container";
 import { site, navigation } from "@/lib/site";
-import { projects } from "@/lib/projects";
+import { getLiveProjects } from "@/lib/live";
 
 const linkClass =
   "w-fit text-[13px] text-white/50 transition-colors duration-200 hover:text-white";
 
-export default function Footer() {
+export default async function Footer() {
+  const projects = await getLiveProjects();
   const currentYear = new Date().getFullYear();
 
   return (

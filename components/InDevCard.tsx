@@ -10,9 +10,11 @@ import Wordmark from "./Wordmark";
 import Spotlight from "./ui/Spotlight";
 import AccessNote from "./AccessNote";
 import InstagramLink from "./InstagramLink";
+import ProductLogo from "./live/ProductLogo";
+import LiveStamp from "./live/LiveStamp";
 
 export default function InDevCard({ project }: { project: Project }) {
-  const { slug, name, tagline, liveUrl, highlights, appUrl, access, accessNote, updatesUrl } = project;
+  const { slug, name, tagline, liveUrl, highlights, appUrl, access, accessNote, updatesUrl, logo, updates, syncedAt } = project;
   const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
   const [expanded, setExpanded] = useState(false);
 
@@ -26,11 +28,10 @@ export default function InDevCard({ project }: { project: Project }) {
           rel="noopener noreferrer"
           className="hero-surface group/banner relative flex h-40 items-center justify-center"
         >
-          <Wordmark
-            slug={slug}
-            name={name}
-            className="text-[40px] text-white transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-          />
+          <span className="flex items-center gap-4 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
+            <ProductLogo src={logo?.mark} size={44} />
+            <Wordmark slug={slug} name={name} className="text-[40px] text-white" />
+          </span>
           <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur transition-colors group-hover/banner:bg-white/15 group-hover/banner:text-white">
             {appHost}
             <span className="sr-only">, opens in a new tab</span>
@@ -41,11 +42,10 @@ export default function InDevCard({ project }: { project: Project }) {
         </a>
       ) : (
         <div className="hero-surface relative flex h-40 items-center justify-center">
-          <Wordmark
-            slug={slug}
-            name={name}
-            className="text-[40px] text-white transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-          />
+          <span className="flex items-center gap-4 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
+            <ProductLogo src={logo?.mark} size={44} />
+            <Wordmark slug={slug} name={name} className="text-[40px] text-white" />
+          </span>
         </div>
       )}
 
@@ -63,6 +63,12 @@ export default function InDevCard({ project }: { project: Project }) {
           <StatusPill status="in-development" />
         </div>
         <p className="text-[14px] leading-relaxed text-warm-600">{tagline}</p>
+        {updates?.[0] && (
+          <p className="mt-3 text-[13px] text-warm-600">
+            <span className="font-semibold text-navy-950">New:</span> {updates[0].title}
+          </p>
+        )}
+        {syncedAt && appHost && <LiveStamp syncedAt={syncedAt} source={appHost} className="mt-3" />}
 
         {/* Collapsible highlights */}
         <button

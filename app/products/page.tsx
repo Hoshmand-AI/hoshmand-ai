@@ -4,7 +4,9 @@ import PageHero from "@/components/PageHero";
 import InDevCard from "@/components/InDevCard";
 import Reveal, { RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { site } from "@/lib/site";
-import { getInDevProjects } from "@/lib/projects";
+import { CARD_REVALIDATE, getLiveProjects } from "@/lib/live";
+
+export const revalidate = CARD_REVALIDATE;
 
 export const metadata: Metadata = {
   title: "Products",
@@ -30,8 +32,8 @@ function SectionHeading({ title, count, tone }: { title: string; count: string; 
   );
 }
 
-export default function ProductsPage() {
-  const inDev = getInDevProjects();
+export default async function ProductsPage() {
+  const inDev = (await getLiveProjects()).filter((p) => p.status === "in-development");
 
   return (
     <>

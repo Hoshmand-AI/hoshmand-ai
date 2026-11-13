@@ -10,7 +10,10 @@ import Steps from "@/components/home/Steps";
 import MorphStage from "@/components/home/MorphStage";
 import AskBar from "@/components/guide/AskBar";
 import { site } from "@/lib/site";
-import { projects } from "@/lib/projects";
+import { CARD_REVALIDATE, getLiveProjects } from "@/lib/live";
+
+// Re-rendered from the products' own cards about every 30 seconds (lib/live.ts).
+export const revalidate = CARD_REVALIDATE;
 
 const principles = [
   {
@@ -55,7 +58,8 @@ const arrow = (
   </svg>
 );
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getLiveProjects();
   const showcase = projects.map((p) => ({
     slug: p.slug,
     name: p.name,
@@ -68,7 +72,11 @@ export default function Home() {
     access: p.access,
     accessNote: p.accessNote,
     updatesUrl: p.updatesUrl,
+    logo: p.logo?.mark,
+    latest: p.updates?.[0]?.title,
+    syncedAt: p.syncedAt,
   }));
+  const nameOf = (slug: string) => projects.find((p) => p.slug === slug)?.name ?? slug;
   const betaCount = projects.filter((p) => p.access === "invite-only").length;
 
   return (
@@ -112,7 +120,7 @@ export default function Home() {
             </HeroFade>
           </div>
           <HeroFade delay={0.45}>
-            <MorphStage />
+            <MorphStage names={{ mailhandled: nameOf("mailhandled"), runf9: nameOf("runf9"), safeclaw: nameOf("safeclaw") }} />
           </HeroFade>
           </div>
         </Container>

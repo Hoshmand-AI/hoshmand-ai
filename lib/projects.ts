@@ -23,6 +23,24 @@ export interface Project {
   ethics: string[];
   artifact?: { label: string; href: string };
   customPage?: boolean;
+  /**
+   * The product's public product card (docs/PRODUCT-CARD.md). When set, the site reads it about
+   * once a minute (lib/live.ts) and the product's own name, logo, description, highlights, access
+   * and recent updates replace the copy below. The copy below is the fallback if the card is down.
+   */
+  cardUrl?: string;
+  /** Names the product went by before. Filled from the card; kept so old links and questions still find it. */
+  formerNames?: string[];
+  /** Short line from the product itself (e.g. "Construction scheduling, explained"). */
+  shortTagline?: string;
+  /** Absolute image URLs, from the card. */
+  logo?: { mark?: string; wordmarkLight?: string; wordmarkDark?: string };
+  /** Recent changes, newest first, from the card. */
+  updates?: { date: string; title: string }[];
+  /** The deploy the card came from. */
+  release?: { id: string; note?: string; builtAt?: string };
+  /** When this site last read the card (ISO), or undefined when the fallback copy is showing. */
+  syncedAt?: string;
 }
 
 export const projects: Project[] = [
@@ -36,6 +54,7 @@ export const projects: Project[] = [
     status: "in-development",
     expectedShip: "Q4 2026",
     appUrl: "https://mailhandled.ai",
+    cardUrl: "https://mailhandled.ai/api/product",
     access: "invite-only",
     accessNote: "Private beta · invite only during Google verification",
     updatesUrl: "https://www.instagram.com/hoshmand.ai.studio/",
@@ -57,28 +76,32 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "planora",
-    name: "Planora",
+    slug: "runf9",
+    name: "RunF9",
+    formerNames: ["Planora"],
+    shortTagline: "Construction scheduling, explained",
     tagline:
-      "Planora reads a big construction schedule and explains it in plain words — what's on track, what's late, and what matters most — so you don't need to pay an expensive expert.",
+      "Build and check construction schedules with a written basis for every duration and link, the DCMA 14-Point Assessment, and native Primavera P6 and MS Project export.",
     status: "in-development",
     expectedShip: "Q4 2026",
     appUrl: "https://planora-chi.vercel.app",
+    cardUrl: "https://planora-chi.vercel.app/api/product",
     access: "invite-only",
+    accessNote: "Private beta · by invitation",
     problem:
-      "Reading a Primavera P6 or MS Project schedule requires years of domain expertise. Most project teams pay $200/hr consultants to answer questions the data already contains.",
+      "Reading and defending a Primavera P6 or MS Project schedule takes years of domain expertise. Most project teams pay $200/hr consultants to answer questions the data already contains.",
     approach:
-      "Upload a schedule. Planora parses it, identifies the critical path, flags variance, and answers natural-language questions — built by a 13-year construction scheduling professional who managed schedules at Meta, USPS, and Applied Digital.",
+      "Start with a short interview or upload a schedule. RunF9 does the repetitive parts of scheduling and shows its work: every duration and link has a written basis, the DCMA 14-Point Assessment runs in seconds, a Daily Brief checks field reports, drawings and the contract against the schedule, and the result exports back to P6 or MS Project. Built by a construction scheduler with 13 years in the field.",
     highlights: [
-      "Primavera P6 and MS Project support",
-      "Critical path identification",
-      "Schedule variance analysis",
-      "Natural language Q&A over your schedule",
+      "Press F9 and get a finish date you can defend: every duration and link has a written basis",
+      "DCMA 14-Point Assessment on any Primavera P6 or MS Project schedule, in seconds",
+      "Native P6 and MS Project export",
+      "A Daily Brief each morning that checks field reports, drawings and the contract against the schedule",
     ],
     ethics: [
-      "Built by a domain expert — not a generalist AI wrapping P6 docs",
-      "Transparent about what the model can and cannot infer",
-      "Experimental — not a substitute for professional schedule review",
+      "Built by a domain expert, not a generalist AI wrapping P6 docs",
+      "Shows its work: every figure is reproducible and every AI draft is marked for review",
+      "Experimental: not a substitute for professional schedule review",
     ],
   },
   {
@@ -109,6 +132,9 @@ export const projects: Project[] = [
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
+
+/** Old addresses of renamed products, so /products/planora still lands on RunF9. */
+export const PRODUCT_ALIASES: Record<string, string> = { planora: "runf9" };
 
 export function getShippingProjects(): Project[] {
   return projects.filter((p) => p.status === "shipping");

@@ -10,7 +10,14 @@ import AccessNote from "@/components/AccessNote";
 import InstagramLink from "@/components/InstagramLink";
 import HeroText, { HeroFade } from "@/components/motion/HeroText";
 import Reveal from "@/components/motion/Reveal";
-import { getProject, projects } from "@/lib/projects";
+import ProductLogo from "@/components/live/ProductLogo";
+import LiveStamp from "@/components/live/LiveStamp";
+import WhatsNew from "@/components/live/WhatsNew";
+import { PRODUCT_ALIASES, projects } from "@/lib/projects";
+import { CARD_REVALIDATE, getLiveProject, getLiveProjects } from "@/lib/live";
+
+// Re-rendered from the product's own card about every 30 seconds (lib/live.ts).
+export const revalidate = CARD_REVALIDATE;
 
 interface Props {
   params: { slug: string };
@@ -21,7 +28,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = getProject(params.slug);
+  const project = await getLiveProject(params.slug);
   if (!project) return {};
   return { title: project.name, description: project.tagline };
 }
@@ -32,17 +39,18 @@ const chevronLeft = (
   </svg>
 );
 
-export default function ProjectDetailPage({ params }: Props) {
-  const project = getProject(params.slug);
+export default async function ProjectDetailPage({ params }: Props) {
+  if (PRODUCT_ALIASES[params.slug]) redirect(`/products/${PRODUCT_ALIASES[params.slug]}`);
+  const project = await getLiveProject(params.slug);
 
   if (!project) notFound();
   if (project.customPage) redirect(`/${project.slug}`);
 
-  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access, accessNote, updatesUrl } = project;
+  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access, accessNote, updatesUrl, logo, shortTagline, formerNames, syncedAt } = project;
   const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
 
   // Neighbours for the "next product" footer.
-  const list = projects.filter((p) => !p.customPage);
+  const list = (await getLiveProjects()).filter((p) => !p.customPage);
   const idx = list.findIndex((p) => p.slug === slug);
   const next = list[(idx + 1) % list.length];
 
@@ -67,8 +75,17 @@ export default function ProjectDetailPage({ params }: Props) {
                 <div className="mb-5"><StatusPill status={status} tone="dark" /></div>
               </HeroFade>
               <HeroText text={name} className="text-[3rem] !text-white sm:text-[4.2rem] !leading-none tracking-[-0.03em]" delay={0.1} />
+              <HeroFade delay={0.3}>
+                {(shortTagline || formerNames?.length) && (
+                  <p className="mt-4 text-[15px] font-medium text-gold-400">
+                    {shortTagline}
+                    {formerNames?.length ? <span className="text-white/60">{shortTagline ? " · " : ""}formerly {formerNames.join(", ")}</span> : null}
+                  </p>
+                )}
+              </HeroFade>
               <HeroFade delay={0.35}>
-                <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/60">{tagline}</p>
+                <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/70">{tagline}</p>
+                {syncedAt && appHost && <LiveStamp syncedAt={syncedAt} source={appHost} tone="dark" className="mt-4" />}
               </HeroFade>
               {appUrl && (
                 <HeroFade delay={0.45}>
@@ -119,7 +136,10 @@ export default function ProjectDetailPage({ params }: Props) {
                 const tile = (
                   <>
                     <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(60%_60%_at_50%_40%,rgba(200,150,62,0.18),transparent_70%)]" />
-                    <Wordmark slug={slug} name={name} className="relative text-[52px] text-white sm:text-[64px]" />
+                    <span className="relative flex flex-col items-center gap-5">
+                      <ProductLogo src={logo?.mark} size={88} className="drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)]" />
+                      <Wordmark slug={slug} name={name} className="text-[52px] text-white sm:text-[64px]" />
+                    </span>
                   </>
                 );
                 const cls = "relative mx-auto flex aspect-[4/3] w-full max-w-md items-center justify-center rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] backdrop-blur-xl";
@@ -148,6 +168,7 @@ export default function ProjectDetailPage({ params }: Props) {
           <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
             <Reveal className="lg:col-span-2">
               <ProjectTabs problem={problem} approach={approach} highlights={highlights} ethics={ethics} />
+              <WhatsNew project={project} />
 
               {artifact && (
                 <a

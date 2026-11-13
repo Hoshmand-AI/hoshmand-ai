@@ -1,4 +1,4 @@
-import { projects, type Project } from "./projects";
+import { projects as fallbackProjects, type Project } from "./projects";
 import { site } from "./site";
 
 // The on-site guide. It answers from what is on this site (no model call, nothing leaves
@@ -16,6 +16,7 @@ export interface GuideReply {
 }
 
 const has = (q: string, ...words: string[]) => words.some((w) => q.includes(w));
+const nm = (list: Project[], slug: string) => list.find((p) => p.slug === slug)?.name ?? slug;
 
 function productActions(p: Project): GuideAction[] {
   const actions: GuideAction[] = [];
@@ -34,9 +35,11 @@ function productReply(p: Project, lead = ""): GuideReply {
 }
 
 // What a visitor might be trying to get done → the product built for it.
+// The products' own names are not fixed (they come live from each product's card), so the
+// functions below take the current list; the static list is only the fallback.
 const NEEDS: { slug: string; words: string[] }[] = [
   { slug: "mailhandled", words: ["email", "e-mail", "inbox", "gmail", "outlook", "calendar", "subscription", "attachment", "mail", "reply", "replies"] },
-  { slug: "planora", words: ["construction", "schedule", "primavera", "p6", "ms project", "critical path", "contractor", "project plan", "gantt", "delay"] },
+  { slug: "runf9", words: ["construction", "schedule", "scheduling", "primavera", "p6", "ms project", "critical path", "contractor", "project plan", "gantt", "delay", "dcma", "f9"] },
   { slug: "safeclaw", words: ["whatsapp", "linkedin", "message", "notes", "voice", "on my mac", "accounts", "notification", "dm", "twitter"] },
 ];
 
@@ -47,17 +50,23 @@ export const SUGGESTIONS = [
   "Who is behind Hoshmand AI?",
 ];
 
-export function suggestionsFor(pathname: string): string[] {
-  const p = projects.find((x) => pathname === `/products/${x.slug}`);
+export function suggestionsFor(pathname: string, list: Project[] = fallbackProjects): string[] {
+  const p = list.find((x) => pathname === `/products/${x.slug}`);
   if (p) return [`How do I try ${p.name}?`, `What does ${p.name} do?`, "Show me the other products", "How do I contact you?"];
   if (pathname.startsWith("/contact")) return ["How do I contact you?", "Do you have Instagram?", "What do you build?"];
   if (pathname.startsWith("/about")) return ["Who is behind Hoshmand AI?", "What does responsible AI mean here?", "What do you build?"];
   return SUGGESTIONS;
 }
 
-export function reply(raw: string): GuideReply {
+/** A product named in the question, by its current name, its address or a name it used to have. */
+function namedIn(q: string, list: Project[]): Project | undefined {
+  return list.find((p) => [p.name, p.slug, ...(p.formerNames ?? [])].some((n) => q.includes(n.toLowerCase())));
+}
+
+export function reply(raw: string, list: Project[] = fallbackProjects): GuideReply {
+  const projects = list;
   const q = ` ${raw.toLowerCase().replace(/[?!.,]/g, " ").replace(/\s+/g, " ").trim()} `;
-  const named = projects.find((p) => q.includes(p.name.toLowerCase()) || q.includes(p.slug));
+  const named = namedIn(q, projects);
 
   // Greetings
   if (/^ (hi|hello|hey|salam|salaam|good (morning|afternoon|evening)) /.test(q) && q.trim().split(" ").length <= 3) {
@@ -78,7 +87,10 @@ export function reply(raw: string): GuideReply {
   }
 
   // A named product
-  if (named) return productReply(named);
+  if (named) {
+    const was = named.formerNames?.find((n) => q.includes(n.toLowerCase()) && !q.includes(named.name.toLowerCase()));
+    return productReply(named, was ? `${was} is now called ${named.name}. ` : "");
+  }
 
   // A need that maps to a product
   const need = NEEDS.find((n) => n.words.some((w) => q.includes(w)));
@@ -121,7 +133,7 @@ export function reply(raw: string): GuideReply {
   // Ethics and privacy
   if (has(q, "ethic", "responsible", "privacy", "private", "safe", "trust", "data", "secure")) {
     return {
-      text: "Responsible AI is the foundation here, not a feature. Every product keeps a person in control: MailHandled sends nothing until you press the button, SafeClaw has no way to send or post at all, and Planora explains its reasoning. Each product page lists its commitments under Ethics.",
+      text: `Responsible AI is the foundation here, not a feature. Every product keeps a person in control: ${nm(projects, "mailhandled")} sends nothing until you press the button, ${nm(projects, "safeclaw")} has no way to send or post at all, and ${nm(projects, "runf9")} shows its work. Each product page lists its commitments under Ethics.`,
       actions: [
         { kind: "navigate", label: "Read how we work", href: "/about" },
         { kind: "navigate", label: "See the products", href: "/products" },
@@ -163,7 +175,7 @@ export function reply(raw: string): GuideReply {
 // ── Action catalogue ───────────────────────────────────────────────────────
 // Every action the guide may offer, keyed by a stable id. The AI route can only
 // pick ids from this list, so it can never invent a link or an address.
-export function actionCatalogue(): Record<string, GuideAction> {
+export function actionCatalogue(list: Project[] = fallbackProjects): Record<string, GuideAction> {
   const c: Record<string, GuideAction> = {
     "nav:products": { kind: "navigate", label: "See all products", href: "/products" },
     "nav:about": { kind: "navigate", label: "Read our story", href: "/about" },
@@ -173,7 +185,7 @@ export function actionCatalogue(): Record<string, GuideAction> {
     "open:instagram": { kind: "external", label: "Open Instagram", href: site.instagramUrl },
     "open:linkedin": { kind: "external", label: "Founder on LinkedIn", href: site.linkedinUrl },
   };
-  for (const p of projects) {
+  for (const p of list) {
     c[`nav:${p.slug}`] = { kind: "navigate", label: `${p.name} details`, href: `/products/${p.slug}` };
     c[`waitlist:${p.slug}`] = { kind: "waitlist", label: `${p.name} waitlist`, slug: p.slug, name: p.name };
     if (p.appUrl) c[`open:${p.slug}`] = { kind: "external", label: `Open ${p.name}`, href: p.appUrl };
@@ -182,14 +194,15 @@ export function actionCatalogue(): Record<string, GuideAction> {
 }
 
 /** The facts the AI guide may answer from: everything public on this site. */
-export function siteFacts(): string {
-  const products = projects
+export function siteFacts(list: Project[] = fallbackProjects): string {
+  const products = list
     .map(
       (p) =>
-        `## ${p.name} (${p.status === "shipping" ? "available" : "in development"}${p.access === "invite-only" ? `, invite-only: ${p.accessNote ?? "invite-only beta"}` : ""})\n` +
+        `## ${p.name}${p.formerNames?.length ? ` (formerly ${p.formerNames.join(", ")})` : ""} (${p.status === "shipping" ? "available" : "in development"}${p.access === "invite-only" ? `, invite-only: ${p.accessNote ?? "invite-only beta"}` : ""})\n` +
         `${p.tagline}\nProblem: ${p.problem}\nApproach: ${p.approach}\n` +
         `Highlights: ${p.highlights.join("; ")}\nCommitments: ${p.ethics.join("; ")}` +
-        (p.appUrl ? `\nWeb app: ${p.appUrl}` : "\nNo public link yet.")
+        (p.appUrl ? `\nWeb app: ${p.appUrl}` : "\nNo public link yet.") +
+        (p.updates?.length ? `\nRecent updates (newest first): ${p.updates.map((u) => `${u.date}: ${u.title}`).join("; ")}` : "")
     )
     .join("\n\n");
   return (
