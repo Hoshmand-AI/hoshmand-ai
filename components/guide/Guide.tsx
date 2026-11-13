@@ -33,21 +33,46 @@ export default function Guide() {
   const logRef = useRef<HTMLDivElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
 
+  // Latest transcript, so a question can be sent with the conversation so far.
+  const history = useRef<Message[]>([]);
+  history.current = messages;
+  // Once the AI route reports it is unavailable, stop calling it for this visit.
+  const aiOff = useRef(false);
+
   const ask = useCallback(
-    (question: string) => {
+    async (question: string) => {
       const q = question.trim();
       if (!q) return;
       setInput("");
+      const turns = [...history.current.map((m) => ({ role: m.from === "user" ? "user" : "assistant", text: m.text })), { role: "user", text: q }];
       setMessages((m) => [...m, { id: nextId.current++, from: "user", text: q }]);
       setThinking(true);
-      // A short beat so the answer reads as considered, then it types out.
-      window.setTimeout(() => {
-        const r = reply(q);
-        const id = nextId.current++;
-        setThinking(false);
-        setMessages((m) => [...m, { id, from: "guide", text: r.text, actions: r.actions }]);
-        setTyping(id);
-      }, reduce ? 0 : 420);
+
+      // Ask the AI guide first; fall back to the built-in answers when it is unavailable.
+      let r: { text: string; actions: GuideAction[] } | null = null;
+      if (!aiOff.current) {
+        try {
+          const res = await fetch("/api/guide", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: turns }),
+          });
+          const data = await res.json();
+          if (data?.ok && typeof data.text === "string") r = { text: data.text, actions: data.actions ?? [] };
+          else if (data?.reason === "unconfigured") aiOff.current = true;
+        } catch {
+          // Network or parse failure: answer locally.
+        }
+      }
+      if (!r) {
+        // A short beat so the answer reads as considered.
+        if (!reduce) await new Promise((done) => window.setTimeout(done, 420));
+        r = reply(q);
+      }
+      const id = nextId.current++;
+      setThinking(false);
+      setMessages((m) => [...m, { id, from: "guide", text: r.text, actions: r.actions }]);
+      setTyping(id);
     },
     [reduce]
   );

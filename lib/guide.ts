@@ -159,3 +159,42 @@ export function reply(raw: string): GuideReply {
     ],
   };
 }
+
+// ── Action catalogue ───────────────────────────────────────────────────────
+// Every action the guide may offer, keyed by a stable id. The AI route can only
+// pick ids from this list, so it can never invent a link or an address.
+export function actionCatalogue(): Record<string, GuideAction> {
+  const c: Record<string, GuideAction> = {
+    "nav:products": { kind: "navigate", label: "See all products", href: "/products" },
+    "nav:about": { kind: "navigate", label: "Read our story", href: "/about" },
+    "nav:contact": { kind: "navigate", label: "Open the Contact page", href: "/contact" },
+    "copy:email": { kind: "copy", label: "Copy email address", text: site.supportEmail },
+    "open:email": { kind: "external", label: "Write an email", href: `mailto:${site.supportEmail}` },
+    "open:instagram": { kind: "external", label: "Open Instagram", href: site.instagramUrl },
+    "open:linkedin": { kind: "external", label: "Founder on LinkedIn", href: site.linkedinUrl },
+  };
+  for (const p of projects) {
+    c[`nav:${p.slug}`] = { kind: "navigate", label: `${p.name} details`, href: `/products/${p.slug}` };
+    c[`waitlist:${p.slug}`] = { kind: "waitlist", label: `${p.name} waitlist`, slug: p.slug, name: p.name };
+    if (p.appUrl) c[`open:${p.slug}`] = { kind: "external", label: `Open ${p.name}`, href: p.appUrl };
+  }
+  return c;
+}
+
+/** The facts the AI guide may answer from: everything public on this site. */
+export function siteFacts(): string {
+  const products = projects
+    .map(
+      (p) =>
+        `## ${p.name} (${p.status === "shipping" ? "available" : "in development"}${p.access === "invite-only" ? `, invite-only: ${p.accessNote ?? "invite-only beta"}` : ""})\n` +
+        `${p.tagline}\nProblem: ${p.problem}\nApproach: ${p.approach}\n` +
+        `Highlights: ${p.highlights.join("; ")}\nCommitments: ${p.ethics.join("; ")}` +
+        (p.appUrl ? `\nWeb app: ${p.appUrl}` : "\nNo public link yet.")
+    )
+    .join("\n\n");
+  return (
+    `# ${site.name}\n${site.description}\nFounder: ${site.founderName}. Based in Virginia.\n` +
+    `Support email: ${site.supportEmail} (replies within 24-48 hours). Instagram: ${site.instagramHandle}.\n` +
+    `Pricing has not been announced for any product.\n\n${products}`
+  );
+}
