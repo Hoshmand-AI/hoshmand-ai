@@ -93,14 +93,14 @@ export default function WaitlistForm({ className = "" }: WaitlistFormProps) {
         </button>
       </div>
 
-      <p className="mt-3 text-[12px] text-warm-400">
+      <p className="mt-3 text-[12px] text-warm-500">
         No spam. Just a single email when we launch.
       </p>
 
       {message && (
         <p
           className={`mt-4 text-sm ${
-            state === "success" ? "text-[#3D8B6E]" : "text-[#B85C5C]"
+            state === "success" ? "text-success-700" : "text-error-700"
           }`}
           role="alert"
         >

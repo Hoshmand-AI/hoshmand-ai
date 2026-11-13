@@ -21,7 +21,7 @@ export default function CopyEmail({ email }: { email: string }) {
     <button type="button" onClick={copy} className="btn-secondary !h-9 !px-4 text-[12.5px]" aria-live="polite">
       <AnimatePresence mode="wait" initial={false}>
         {copied ? (
-          <motion.span key="done" className="inline-flex items-center gap-1.5 text-[#3D8B6E]" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.18 }}>
+          <motion.span key="done" className="inline-flex items-center gap-1.5 text-success-700" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.18 }}>
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>

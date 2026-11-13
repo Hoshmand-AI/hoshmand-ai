@@ -156,7 +156,7 @@ function InboxContent() {
           <span className="font-bold">Mail</span>
           <span className="font-serif text-gold-400">Handled</span>
         </span>
-        <span className="text-[11px] text-white/45">Daily brief</span>
+        <span className="text-[11px] text-white/60">Daily brief</span>
       </div>
       <motion.div {...item(0)} className="mt-5 flex items-baseline gap-2">
         <span className="font-serif text-[44px] leading-none text-gold-400">6</span>
@@ -240,7 +240,7 @@ function NotesContent() {
           <span className="font-bold">Safe</span>
           <span className="font-serif text-gold-400">Claw</span>
         </span>
-        <span className="text-[11px] text-white/45">What may need you</span>
+        <span className="text-[11px] text-white/60">What may need you</span>
       </div>
       <div className="mt-5 space-y-2.5">
         {notes.map((n, i) => (

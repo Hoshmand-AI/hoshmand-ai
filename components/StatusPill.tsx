@@ -9,7 +9,8 @@ export default function StatusPill({ status, tone = "light" }: { status: Status;
       style={{
         borderColor: shipping ? "rgba(61,139,110,0.25)" : "rgba(200,150,62,0.3)",
         backgroundColor: shipping ? "rgba(61,139,110,0.08)" : "rgba(200,150,62,0.08)",
-        color: tone === "dark" && !shipping ? "#D4A94F" : color,
+        // Text uses the 700 shade on light surfaces so it clears 4.5:1; dots keep the 500.
+        color: tone === "dark" ? (shipping ? "#8FD4B8" : "#D4A94F") : shipping ? "#2A6B53" : "#8F6A1F",
       }}
     >
       <span className="relative flex h-1.5 w-1.5">

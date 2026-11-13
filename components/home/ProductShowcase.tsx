@@ -124,7 +124,7 @@ export default function ProductShowcase({ products }: { products: ShowcaseProduc
                 {product.access === "invite-only" && <AccessNote label={product.accessNote} />}
                 {product.updatesUrl && <InstagramLink href={product.updatesUrl} label="Instagram" />}
                 <Link href={product.href} className="arrow-link text-[13.5px] text-warm-600 hover:text-navy-950">
-                  Learn more
+                  Learn more<span className="sr-only"> about {product.name}</span>
                   <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>

@@ -47,12 +47,12 @@ export default function ProjectTabs({ problem, approach, highlights, ethics }: P
             {tab === "overview" && (
               <div className="space-y-8">
                 <div>
-                  <p className="eyebrow mb-3 !text-gold-600">The problem</p>
+                  <p className="eyebrow mb-3 !text-gold-700">The problem</p>
                   <p className="text-[17px] leading-relaxed text-warm-600">{problem}</p>
                 </div>
                 <div className="h-px bg-warm-200" />
                 <div>
-                  <p className="eyebrow mb-3 !text-gold-600">The approach</p>
+                  <p className="eyebrow mb-3 !text-gold-700">The approach</p>
                   <p className="text-[17px] leading-relaxed text-warm-600">{approach}</p>
                 </div>
               </div>
@@ -81,7 +81,7 @@ export default function ProjectTabs({ problem, approach, highlights, ethics }: P
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ type: "spring", bounce: 0, duration: 0.45, delay: i * 0.05 }}
-                    className="flex items-start gap-3 rounded-2xl border border-[#3D8B6E]/15 bg-[#3D8B6E]/[0.04] p-5 text-[14.5px] text-warm-700"
+                    className="flex items-start gap-3 rounded-2xl border border-[#3D8B6E]/15 bg-success-500/[0.04] p-5 text-[14.5px] text-warm-700"
                   >
                     {check("#3D8B6E")}
                     {e}

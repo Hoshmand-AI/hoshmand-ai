@@ -22,7 +22,7 @@ export default function InstagramLink({
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-flex items-center gap-1.5 text-[13px] font-semibold transition-colors ${
-        tone === "dark" ? "text-white/75 hover:text-white" : "text-navy-950 hover:text-gold-600"
+        tone === "dark" ? "text-white/75 hover:text-white" : "text-navy-950 hover:text-gold-700"
       }`}
     >
       <InstagramIcon />

@@ -8,6 +8,7 @@ import CountUp from "@/components/ui/CountUp";
 import ProductShowcase from "@/components/home/ProductShowcase";
 import Steps from "@/components/home/Steps";
 import MorphStage from "@/components/home/MorphStage";
+import AskBar from "@/components/guide/AskBar";
 import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
 
@@ -85,6 +86,7 @@ export default function Home() {
             </HeroFade>
             <HeroText
               text="Responsible AI, built to turn digital clutter into action."
+              accentWords={2}
               className="display !text-white lg:!text-[3.9rem]"
               delay={0.1}
             />
@@ -93,8 +95,13 @@ export default function Home() {
                 {site.name} designs and ships practical AI products that reduce cognitive load and help people follow through — grounded in the principles of responsible, ethical AI.
               </p>
             </HeroFade>
-            <HeroFade delay={0.7}>
-              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
+            <HeroFade delay={0.65}>
+              <div className="mt-9">
+                <AskBar />
+              </div>
+            </HeroFade>
+            <HeroFade delay={0.75}>
+              <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
                 <Link href="/products" className="btn-primary !h-12 !px-7 text-[15px]">
                   Explore products {arrow}
                 </Link>

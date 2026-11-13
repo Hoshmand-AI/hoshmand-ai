@@ -42,7 +42,7 @@ export default function Steps({ steps }: { steps: Step[] }) {
                     selected
                       ? "scale-110 border-gold-500 bg-gold-500 text-navy-950 shadow-[0_0_0_6px_rgba(200,150,62,0.15)]"
                       : done
-                        ? "border-gold-500 bg-gold-100 text-gold-600"
+                        ? "border-gold-500 bg-gold-100 text-gold-700"
                         : "border-warm-300 bg-warm-50 text-warm-500 group-hover:border-warm-400"
                   }`}
                 >

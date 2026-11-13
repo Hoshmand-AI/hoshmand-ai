@@ -24,7 +24,6 @@ export default function InDevCard({ project }: { project: Project }) {
           href={appUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Open ${name} (${appHost}) in a new tab`}
           className="hero-surface group/banner relative flex h-40 items-center justify-center"
         >
           <Wordmark
@@ -34,6 +33,7 @@ export default function InDevCard({ project }: { project: Project }) {
           />
           <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur transition-colors group-hover/banner:bg-white/15 group-hover/banner:text-white">
             {appHost}
+            <span className="sr-only">, opens in a new tab</span>
             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
             </svg>
@@ -53,7 +53,7 @@ export default function InDevCard({ project }: { project: Project }) {
         <div className="mb-3 flex items-start justify-between gap-3">
           <h3 className="text-[18px] font-semibold text-navy-950">
             {appUrl ? (
-              <a href={appUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-600">
+              <a href={appUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-700">
                 {name}
               </a>
             ) : (
@@ -70,7 +70,7 @@ export default function InDevCard({ project }: { project: Project }) {
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
           aria-controls={`highlights-${slug}`}
-          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full py-1 text-[13px] font-semibold text-navy-950 transition-colors hover:text-gold-600"
+          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full py-1 text-[13px] font-semibold text-navy-950 transition-colors hover:text-gold-700"
         >
           {expanded ? "Show less" : "What it does"}
           <motion.svg
@@ -116,7 +116,7 @@ export default function InDevCard({ project }: { project: Project }) {
         <div className="mt-auto space-y-4 pt-6">
           <div className="h-px bg-warm-200" />
           {liveUrl && (
-            <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="arrow-link text-[13px] text-gold-600 hover:text-gold-500">
+            <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="arrow-link text-[13px] text-gold-700 hover:text-gold-500">
               View live demo
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -147,7 +147,7 @@ export default function InDevCard({ project }: { project: Project }) {
             <ProjectNotifyForm slug={slug} />
           )}
           <Link href={`/products/${slug}`} className="arrow-link text-[13px] text-warm-500 hover:text-navy-950">
-            Full details
+            Full details<span className="sr-only"> about {name}</span>
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
