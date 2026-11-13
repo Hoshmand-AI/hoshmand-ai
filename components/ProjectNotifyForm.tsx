@@ -72,7 +72,7 @@ export default function ProjectNotifyForm({ slug, startOpen = false, label = "No
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="min-w-0 flex-1 bg-transparent text-[13.5px] text-navy-950 placeholder:text-warm-400 focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent text-[13.5px] text-navy-950 placeholder:text-warm-500 focus:outline-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -94,7 +94,7 @@ export default function ProjectNotifyForm({ slug, startOpen = false, label = "No
           <motion.div
             key="done"
             layoutId={`notify-${slug}`}
-            className="flex h-10 items-center gap-2 rounded-full bg-[#3D8B6E]/10 px-4 text-[13px] font-medium text-[#3D8B6E]"
+            className="flex h-10 items-center gap-2 rounded-full bg-success-500/10 px-4 text-[13px] font-medium text-success-700"
             transition={spring}
             role="status"
           >
@@ -113,7 +113,7 @@ export default function ProjectNotifyForm({ slug, startOpen = false, label = "No
         )}
       </AnimatePresence>
       {state === "error" && (
-        <p className="mt-2 pl-4 text-[12px] text-[#B85C5C]" role="alert">Something went wrong. Please try again.</p>
+        <p className="mt-2 pl-4 text-[12px] text-error-700" role="alert">Something went wrong. Please try again.</p>
       )}
     </div>
   );

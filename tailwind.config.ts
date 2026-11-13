@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tokens from "./design/tokens.json";
 
 const config: Config = {
   content: [
@@ -11,29 +12,29 @@ const config: Config = {
         sans: ["DM Sans", "sans-serif"],
         serif: ["DM Serif Display", "serif"],
       },
+      // Colour system (design/tokens.json): one primary in ten shades, neutrals in ten,
+      // and success / warning / error at 100 / 500 / 700. Named, never picked by eye.
+      // navy / gold / warm are the brand's names for primary / accent / neutral.
       colors: {
-        navy: {
-          950: "#0A1628",
-          900: "#0F2140",
-          800: "#162D54",
-          700: "#1E3A6A",
-        },
-        gold: {
-          600: "#B8862E",
-          500: "#C8963E",
-          400: "#D4A94F",
-          100: "#FDF6E9",
-        },
-        warm: {
-          50:  "#FDFCFA",
-          100: "#F8F6F3",
-          200: "#F0EDE8",
-          300: "#E2DDD5",
-          400: "#B8B0A4",
-          500: "#8A8178",
-          600: "#6B6359",
-          700: "#4A443C",
-        },
+        primary: tokens.primary,
+        accent: tokens.accent,
+        neutral: tokens.neutral,
+        success: tokens.success,
+        warning: tokens.warning,
+        error: tokens.error,
+        navy: tokens.primary,
+        gold: tokens.accent,
+        warm: tokens.neutral,
+      },
+      // Type scale: [size, { lineHeight, letterSpacing }]. Tracking tightens as size grows.
+      fontSize: {
+        caption: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.08em" }],
+        small: ["0.8125rem", { lineHeight: "1.5" }],
+        body: ["0.9375rem", { lineHeight: "1.65" }],
+        lead: ["1.125rem", { lineHeight: "1.6" }],
+        title: ["1.125rem", { lineHeight: "1.3", letterSpacing: "-0.01em" }],
+        heading: ["2.25rem", { lineHeight: "1.1", letterSpacing: "-0.015em" }],
+        display: ["clamp(2.5rem, 6vw, 4.5rem)", { lineHeight: "1.02", letterSpacing: "-0.025em" }],
       },
       animation: {
         "fade-in": "fadeIn 0.2s ease-out",

@@ -26,7 +26,7 @@ export default function LegalSections({ sections }: { sections: { title: string;
         expandAll={all}
         items={sections.map((s, i) => ({
           title: s.title,
-          meta: <span className="w-6 text-[12px] font-semibold tabular-nums text-gold-600">{String(i + 1).padStart(2, "0")}</span>,
+          meta: <span className="w-6 text-[12px] font-semibold tabular-nums text-gold-700">{String(i + 1).padStart(2, "0")}</span>,
           content: <p>{s.content}</p>,
         }))}
       />

@@ -24,7 +24,7 @@ export default function PageHero({ eyebrow, title, description, children, above,
               <p className="eyebrow mb-5 !text-gold-400/80">{eyebrow}</p>
             </HeroFade>
           )}
-          <HeroText text={title} className="text-[2.6rem] !text-white sm:text-[3.6rem] lg:text-[4rem] !leading-[1.04] tracking-[-0.025em]" delay={0.05} />
+          <HeroText text={title} accentWords={1} className="text-[2.6rem] !text-white sm:text-[3.6rem] lg:text-[4rem] !leading-[1.04] tracking-[-0.025em]" delay={0.05} />
           {description && (
             <HeroFade delay={0.4}>
               <p className={`mt-6 max-w-xl text-[17px] leading-relaxed text-white/60 ${center ? "mx-auto" : ""}`}>{description}</p>

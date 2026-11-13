@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
         <Container>
           <Reveal className="max-w-3xl">
             <LegalSections sections={sections} />
-            <p className="mt-10 text-[13px] text-warm-400">MindCue is a product by Hoshmand AI</p>
+            <p className="mt-10 text-[13px] text-warm-500">MindCue is a product by Hoshmand AI</p>
           </Reveal>
         </Container>
       </section>

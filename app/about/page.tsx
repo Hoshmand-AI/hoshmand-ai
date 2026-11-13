@@ -98,7 +98,7 @@ export default function AboutPage() {
             <p className="font-serif text-[1.9rem] leading-[1.2] tracking-[-0.015em] text-white sm:text-[2.6rem]">
               &ldquo;AI should support attention, <span className="text-gold-400">not compete for it.</span>&rdquo;
             </p>
-            <p className="mt-6 text-[13px] font-medium uppercase tracking-[0.12em] text-white/40">{site.founderName}</p>
+            <p className="mt-6 text-[13px] font-medium uppercase tracking-[0.12em] text-white/60">{site.founderName}</p>
           </Reveal>
         </Container>
       </section>

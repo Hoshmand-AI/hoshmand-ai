@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 
 // Headline that rises in word by word, like an Apple keynote title card.
-export default function HeroText({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
+// `accentWords` sets the last N words in serif italic, the type system's one accent.
+export default function HeroText({ text, className, delay = 0, accentWords = 0 }: { text: string; className?: string; delay?: number; accentWords?: number }) {
   const words = text.split(" ");
+  const accentFrom = words.length - accentWords;
   return (
     <motion.h1
       className={className}
@@ -16,7 +18,7 @@ export default function HeroText({ text, className, delay = 0 }: { text: string;
       {words.map((word, i) => (
         <span key={i} className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom" aria-hidden="true">
           <motion.span
-            className="inline-block"
+            className={`inline-block ${i >= accentFrom ? "pr-[0.06em] italic text-gold-400" : ""}`}
             variants={{
               hidden: { y: "105%", opacity: 0 },
               show: { y: "0%", opacity: 1, transition: { type: "spring", bounce: 0, duration: 1 } },

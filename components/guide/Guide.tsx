@@ -278,7 +278,7 @@ export default function Guide() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask anything about Hoshmand AI"
                   autoComplete="off"
-                  className="min-w-0 flex-1 bg-transparent text-[14px] text-white placeholder:text-white/40 focus:outline-none"
+                  className="min-w-0 flex-1 bg-transparent text-[14px] text-white placeholder:text-white/60 focus:outline-none"
                 />
                 <button
                   type="submit"
@@ -369,7 +369,7 @@ function WaitlistChip({ action }: { action: Extract<GuideAction, { kind: "waitli
 
   if (state === "done") {
     return (
-      <motion.span layout className="inline-flex items-center gap-1.5 rounded-full bg-[#3D8B6E]/20 px-3 py-1.5 text-[12.5px] font-medium text-[#8FD4B8]" role="status">
+      <motion.span layout className="inline-flex items-center gap-1.5 rounded-full bg-success-500/20 px-3 py-1.5 text-[12.5px] font-medium text-[#8FD4B8]" role="status">
         <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
         </svg>
@@ -403,7 +403,7 @@ function WaitlistChip({ action }: { action: Extract<GuideAction, { kind: "waitli
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={`Email for ${action.name}`}
-        className="min-w-0 flex-1 bg-transparent text-[13px] text-white placeholder:text-white/40 focus:outline-none"
+        className="min-w-0 flex-1 bg-transparent text-[13px] text-white placeholder:text-white/60 focus:outline-none"
       />
       <button type="submit" disabled={state === "loading"} className="shrink-0 rounded-full bg-gold-500 px-3 py-1.5 text-[12px] font-semibold text-navy-950 active:scale-95 disabled:opacity-50">
         {state === "loading" ? "Joining…" : state === "error" ? "Try again" : "Join"}

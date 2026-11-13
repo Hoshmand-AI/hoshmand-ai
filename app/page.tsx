@@ -86,6 +86,7 @@ export default function Home() {
             </HeroFade>
             <HeroText
               text="Responsible AI, built to turn digital clutter into action."
+              accentWords={2}
               className="display !text-white lg:!text-[3.9rem]"
               delay={0.1}
             />

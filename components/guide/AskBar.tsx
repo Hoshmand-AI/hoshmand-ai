@@ -44,7 +44,7 @@ export default function AskBar() {
           className="relative z-10 w-full bg-transparent py-2 text-[15px] text-white focus:outline-none"
         />
         {!value && (
-          <span className="pointer-events-none absolute inset-0 flex items-center overflow-hidden text-[15px] text-white/45" aria-hidden="true">
+          <span className="pointer-events-none absolute inset-0 flex items-center overflow-hidden text-[15px] text-white/60" aria-hidden="true">
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
                 key={i}

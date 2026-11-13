@@ -40,7 +40,7 @@ export default function ContactPage() {
                     </svg>
                   </span>
                   <p className="eyebrow mb-2">Email</p>
-                  <a href={`mailto:${site.supportEmail}`} className="text-[20px] font-semibold tracking-tight text-navy-950 transition-colors hover:text-gold-600">
+                  <a href={`mailto:${site.supportEmail}`} className="text-[20px] font-semibold tracking-tight text-navy-950 transition-colors hover:text-gold-700">
                     {site.supportEmail}
                   </a>
                   <p className="mt-2 text-[13.5px] text-warm-500">Typically replies within 24–48 hours.</p>
@@ -61,7 +61,7 @@ export default function ContactPage() {
                     </svg>
                   </span>
                   <p className="eyebrow mb-2">LinkedIn</p>
-                  <a href={site.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[20px] font-semibold tracking-tight text-navy-950 transition-colors hover:text-gold-600">
+                  <a href={site.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[20px] font-semibold tracking-tight text-navy-950 transition-colors hover:text-gold-700">
                     {site.founderName}
                   </a>
                   <p className="mt-2 text-[13.5px] text-warm-500">Founder, {site.name}.</p>
@@ -77,7 +77,7 @@ export default function ContactPage() {
 
           <div className="mt-20 grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
             <Reveal>
-              <p className="eyebrow mb-3 !text-gold-600">Topics</p>
+              <p className="eyebrow mb-3 !text-gold-700">Topics</p>
               <h2 className="text-[2rem] sm:text-[2.4rem]">What we can help with.</h2>
               <p className="mt-4 max-w-sm text-[16px] leading-relaxed text-warm-500">Pick a topic to see what to include so we can help faster.</p>
             </Reveal>

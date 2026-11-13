@@ -13,7 +13,7 @@ export default function SectionTitle({ eyebrow, title, description, align = "lef
   const dark = tone === "dark";
   return (
     <Reveal className={center ? "mx-auto max-w-2xl text-center" : ""}>
-      {eyebrow && <p className={`eyebrow mb-3 ${dark ? "!text-gold-400/80" : "!text-gold-600"}`}>{eyebrow}</p>}
+      {eyebrow && <p className={`eyebrow mb-3 ${dark ? "!text-gold-400/80" : "!text-gold-700"}`}>{eyebrow}</p>}
       <h2 className={`text-[2rem] sm:text-[2.6rem] ${dark ? "!text-white" : ""}`}>{title}</h2>
       {description && (
         <p className={`mt-4 max-w-xl text-[16px] leading-relaxed ${center ? "mx-auto" : ""} ${dark ? "text-white/55" : "text-warm-500"}`}>

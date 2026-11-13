@@ -18,11 +18,14 @@
   --warm-200: #F0EDE8;
   --warm-300: #E2DDD5;
   --warm-400: #B8B0A4;
-  --warm-500: #8A8178;
+  --warm-500: #756C63;
   --warm-600: #6B6359;
   --warm-700: #4A443C;
 
   --success: #3D8B6E;
+  --success-700: #2A6B53;
+  --gold-700: #8F6A1F;
+  --error-700: #8E3A3A;
   --warning: #C4873B;
   --danger:  #B85C5C;
   --info:    #4A7FB5;
@@ -155,7 +158,7 @@
     padding: 0 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #8A8178;
+    color: #756C63;
     transition: color 150ms;
     cursor: pointer;
     text-decoration: none;
@@ -231,19 +234,19 @@
   .input:focus { border-color: #C8963E; box-shadow: 0 0 0 4px rgba(200, 150, 62, 0.14); }
 
   .eyebrow {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #B8B0A4;
+    color: #756C63;
   }
 
   .caption {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #B8B0A4;
+    color: #756C63;
   }
 
   /* Big display headline used on every hero. */

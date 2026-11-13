@@ -53,7 +53,7 @@ export default function InDevCard({ project }: { project: Project }) {
         <div className="mb-3 flex items-start justify-between gap-3">
           <h3 className="text-[18px] font-semibold text-navy-950">
             {appUrl ? (
-              <a href={appUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-600">
+              <a href={appUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-700">
                 {name}
               </a>
             ) : (
@@ -70,7 +70,7 @@ export default function InDevCard({ project }: { project: Project }) {
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
           aria-controls={`highlights-${slug}`}
-          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full py-1 text-[13px] font-semibold text-navy-950 transition-colors hover:text-gold-600"
+          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full py-1 text-[13px] font-semibold text-navy-950 transition-colors hover:text-gold-700"
         >
           {expanded ? "Show less" : "What it does"}
           <motion.svg
@@ -116,7 +116,7 @@ export default function InDevCard({ project }: { project: Project }) {
         <div className="mt-auto space-y-4 pt-6">
           <div className="h-px bg-warm-200" />
           {liveUrl && (
-            <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="arrow-link text-[13px] text-gold-600 hover:text-gold-500">
+            <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="arrow-link text-[13px] text-gold-700 hover:text-gold-500">
               View live demo
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
