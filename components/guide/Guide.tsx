@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import LogoMark from "../LogoMark";
 import { reply, suggestionsFor, type GuideAction } from "@/lib/guide";
+import type { Project } from "@/lib/projects";
 
 interface Message {
   id: number;
@@ -19,7 +20,8 @@ export const ASK_EVENT = "hoshmand:ask";
 
 const spring = { type: "spring" as const, bounce: 0.12, duration: 0.5 };
 
-export default function Guide() {
+/** `products` is the live list (lib/live.ts), so even the offline answers use current names. */
+export default function Guide({ products }: { products?: Project[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const reduce = useReducedMotion();
@@ -67,14 +69,14 @@ export default function Guide() {
       if (!r) {
         // A short beat so the answer reads as considered.
         if (!reduce) await new Promise((done) => window.setTimeout(done, 420));
-        r = reply(q);
+        r = reply(q, products);
       }
       const id = nextId.current++;
       setThinking(false);
       setMessages((m) => [...m, { id, from: "guide", text: r.text, actions: r.actions }]);
       setTyping(id);
     },
-    [reduce]
+    [reduce, products]
   );
 
   // ⌘K / Ctrl+K toggles, Esc closes, and any element can open the guide with a question.
@@ -138,7 +140,7 @@ export default function Guide() {
     }
   }
 
-  const suggestions = suggestionsFor(pathname);
+  const suggestions = suggestionsFor(pathname, products);
 
   return (
     <>

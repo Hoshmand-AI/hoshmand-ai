@@ -2,6 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useAnimationControls, useInView, useReducedMotion } from "framer-motion";
+import { splitWordmark } from "../Wordmark";
+
+/** Product names, read live from each product's card by the page. */
+export type StageNames = { mailhandled: string; runf9: string; safeclaw: string };
+
+function Mark({ name, gold }: { name: string; gold: string }) {
+  const [a, b] = splitWordmark(name);
+  return (
+    <>
+      <span className="font-bold">{a}</span>
+      <span className={`font-serif ${gold}`}>{b}</span>
+    </>
+  );
+}
 
 // One shape, never cut. It morphs through the products' real states (size, corner radius
 // and colour change; the content swaps with a short blur) while a cursor drives each change.
@@ -31,7 +45,7 @@ const STATES: StageState[] = [
 const shapeSpring = { type: "spring" as const, bounce: 0.12, duration: 0.75 };
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export default function MorphStage() {
+export default function MorphStage({ names }: { names: StageNames }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4 });
   const reduce = useReducedMotion();
@@ -91,10 +105,10 @@ export default function MorphStage() {
               exit={{ opacity: 0, filter: "blur(8px)", scale: 1.02 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
-              {state.id === "cta" && <CtaContent />}
-              {state.id === "inbox" && <InboxContent />}
-              {state.id === "schedule" && <ScheduleContent />}
-              {state.id === "notes" && <NotesContent />}
+              {state.id === "cta" && <CtaContent name={names.mailhandled} />}
+              {state.id === "inbox" && <InboxContent name={names.mailhandled} />}
+              {state.id === "schedule" && <ScheduleContent name={names.runf9} />}
+              {state.id === "notes" && <NotesContent name={names.safeclaw} />}
             </motion.div>
           </AnimatePresence>
         </motion.div>
@@ -131,10 +145,10 @@ const item = (i: number) => ({
   transition: { type: "spring" as const, bounce: 0, duration: 0.5, delay: 0.15 + i * 0.06 },
 });
 
-function CtaContent() {
+function CtaContent({ name }: { name: string }) {
   return (
     <div className="flex h-full items-center justify-center gap-2 text-[15px] font-semibold text-navy-950">
-      Open MailHandled
+      Open {name}
       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
       </svg>
@@ -142,7 +156,7 @@ function CtaContent() {
   );
 }
 
-function InboxContent() {
+function InboxContent({ name }: { name: string }) {
   const accounts = [
     { name: "Work", dot: "#4A7FB5" },
     { name: "Studio", dot: "#C8963E" },
@@ -153,8 +167,7 @@ function InboxContent() {
     <div className="flex h-full flex-col p-6 text-white">
       <div className="flex items-center justify-between">
         <span className="whitespace-nowrap text-[15px] leading-none">
-          <span className="font-bold">Mail</span>
-          <span className="font-serif text-gold-400">Handled</span>
+          <Mark name={name} gold="text-gold-400" />
         </span>
         <span className="text-[11px] text-white/60">Daily brief</span>
       </div>
@@ -185,7 +198,7 @@ function InboxContent() {
   );
 }
 
-function ScheduleContent() {
+function ScheduleContent({ name }: { name: string }) {
   const rows = [
     { label: "Site work", start: 0, len: 30, critical: false },
     { label: "Foundations", start: 22, len: 34, critical: true },
@@ -196,8 +209,7 @@ function ScheduleContent() {
     <div className="flex h-full flex-col p-6">
       <div className="flex items-center justify-between">
         <span className="whitespace-nowrap text-[15px] leading-none text-navy-950">
-          <span className="font-bold">Plan</span>
-          <span className="font-serif text-gold-500">ora</span>
+          <Mark name={name} gold="text-gold-700" />
         </span>
         <span className="flex items-center gap-1.5 text-[11px] font-medium text-warm-500">
           <span className="h-1.5 w-3 rounded-full bg-gold-500" /> Critical path
@@ -227,7 +239,7 @@ function ScheduleContent() {
   );
 }
 
-function NotesContent() {
+function NotesContent({ name }: { name: string }) {
   const notes = [
     { src: "Gmail", text: "Reply needed on the contract draft" },
     { src: "LinkedIn", text: "New message from a recruiter" },
@@ -237,8 +249,7 @@ function NotesContent() {
     <div className="flex h-full flex-col p-6 text-white">
       <div className="flex items-center justify-between">
         <span className="whitespace-nowrap text-[15px] leading-none">
-          <span className="font-bold">Safe</span>
-          <span className="font-serif text-gold-400">Claw</span>
+          <Mark name={name} gold="text-gold-400" />
         </span>
         <span className="text-[11px] text-white/60">What may need you</span>
       </div>

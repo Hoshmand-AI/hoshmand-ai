@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check:contrast": "node scripts/check-contrast.mjs"
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:live": "npx --yes tsx scripts/check-live.mts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.8.0",

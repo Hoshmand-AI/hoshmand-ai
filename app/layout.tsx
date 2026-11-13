@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import Guide from "@/components/guide/Guide";
+import { getLiveProjects } from "@/lib/live";
 
 // Self-hosted at build time: no render-blocking request to Google Fonts.
 const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  keywords: ["AI", "artificial intelligence", "productivity", "MailHandled", "SafeClaw", "Planora", "AI ethics", "responsible AI"],
+  keywords: ["AI", "artificial intelligence", "productivity", "MailHandled", "SafeClaw", "RunF9", "AI ethics", "responsible AI"],
   authors: [{ name: site.founderName }],
   creator: site.founderName,
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg", apple: "/favicon.svg" },
@@ -45,7 +46,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`scroll-smooth ${sans.variable} ${serif.variable}`}>
       <body className="min-h-screen bg-warm-50 font-sans text-warm-600 antialiased">
@@ -56,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
-          <Guide />
+          <Guide products={await getLiveProjects()} />
         </MotionProvider>
       </body>
     </html>
