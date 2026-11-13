@@ -12,7 +12,7 @@ export default function Wordmark({ slug, name, className = "", tone = "dark" }: 
   return (
     <span className={`whitespace-nowrap leading-none tracking-tight ${className}`}>
       <span className="font-bold">{first}</span>
-      <span className={`font-serif font-normal ${tone === "dark" ? "text-gold-400" : "text-gold-500"}`}>{second}</span>
+      <span className={`font-serif font-normal ${tone === "dark" ? "text-gold-400" : "text-gold-700"}`}>{second}</span>
     </span>
   );
 }

@@ -21,7 +21,7 @@ function SectionHeading({ title, count, tone }: { title: string; count: string; 
         style={{
           borderColor: green ? "rgba(61,139,110,0.25)" : "rgba(200,150,62,0.3)",
           backgroundColor: green ? "rgba(61,139,110,0.08)" : "rgba(200,150,62,0.08)",
-          color: green ? "#2A6B53" : "#8F6A1F",
+          color: green ? "#2A6B53" : "#6E5118",
         }}
       >
         {count}

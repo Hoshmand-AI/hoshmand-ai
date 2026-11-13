@@ -40,7 +40,8 @@ export function HeroFade({ children, delay = 0.35, className }: { children: Reac
       className={className}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", bounce: 0, duration: 1, delay }}
+      // Delays are halved: the hero copy is the page's largest paint, so it must not arrive late.
+      transition={{ type: "spring", bounce: 0, duration: 0.7, delay: delay / 2 }}
     >
       {children}
     </motion.div>

@@ -52,13 +52,13 @@
   body {
     background-color: #FDFCFA;
     color: #6B6359;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans), 'DM Sans', sans-serif;
     font-optical-sizing: auto;
   }
 
   /* Tracking is size-specific: large display type is tightened, body stays near 0. */
   h1, h2 {
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--font-serif), 'DM Serif Display', serif;
     font-weight: 400;
     color: #0A1628;
     letter-spacing: -0.015em;
@@ -66,7 +66,7 @@
   }
 
   h3, h4, h5, h6 {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans), 'DM Sans', sans-serif;
     font-weight: 600;
     color: #0A1628;
     letter-spacing: -0.01em;
@@ -228,7 +228,7 @@
     color: #0A1628;
     transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
     outline: none;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans), 'DM Sans', sans-serif;
   }
   .input::placeholder { color: #B8B0A4; }
   .input:focus { border-color: #C8963E; box-shadow: 0 0 0 4px rgba(200, 150, 62, 0.14); }
@@ -251,7 +251,7 @@
 
   /* Big display headline used on every hero. */
   .display {
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--font-serif), 'DM Serif Display', serif;
     font-weight: 400;
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 1.02;

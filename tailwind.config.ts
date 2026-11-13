@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "sans-serif"],
-        serif: ["DM Serif Display", "serif"],
+        sans: ["var(--font-sans)", "DM Sans", "sans-serif"],
+        serif: ["var(--font-serif)", "DM Serif Display", "serif"],
       },
       // Colour system (design/tokens.json): one primary in ten shades, neutrals in ten,
       // and success / warning / error at 100 / 500 / 700. Named, never picked by eye.
