@@ -84,8 +84,8 @@ export const projects: Project[] = [
       "Build and check construction schedules with a written basis for every duration and link, the DCMA 14-Point Assessment, and native Primavera P6 and MS Project export.",
     status: "in-development",
     expectedShip: "Q4 2026",
-    appUrl: "https://planora-chi.vercel.app",
-    cardUrl: "https://planora-chi.vercel.app/api/product",
+    appUrl: "https://runf9.ai",
+    cardUrl: "https://runf9.ai/api/product",
     access: "invite-only",
     accessNote: "Private beta · by invitation",
     problem:
@@ -104,37 +104,17 @@ export const projects: Project[] = [
       "Experimental: not a substitute for professional schedule review",
     ],
   },
-  {
-    slug: "safeclaw",
-    name: "SafeClaw",
-    tagline:
-      "Open each of your accounts (email, LinkedIn, WhatsApp, X, and more) in a web browser, and SafeClaw reads them for you and takes notes on the things you care about. You can ask it out loud what's new, and it gets a reply ready, but it never sends anything for you.",
-    status: "in-development",
-    expectedShip: "Q4 2026",
-    problem:
-      "Messages that matter arrive across Gmail, Outlook, LinkedIn, WhatsApp, X, and more. Checking every account for what needs you is constant, scattered work, and most assistants that help ask for broad permission to act on your behalf.",
-    approach:
-      "You open each of your accounts in one web browser, on your Mac or a server of your own. SafeClaw reads them for you and takes notes on what you want to know about, each linked to where it came from. Ask it by voice or text, have a message read to you, and dictate a reply it prepares for you to send yourself.",
-    highlights: [
-      "Watches Gmail, Outlook, LinkedIn, WhatsApp, X, and others in one browser",
-      "Ask by voice or text, with every note linked to its source",
-      "Runs with a model on your Mac, or a cloud model on your own key",
-      "Optional phone view over your private Tailscale network",
-    ],
-    ethics: [
-      "No mechanism to send, post, like, follow, purchase, or delete",
-      "With a model on your Mac, nothing leaves the device; no telemetry",
-      "Everything it keeps is plain text you can export or delete",
-    ],
-  },
 ];
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
-/** Old addresses of renamed products, so /products/planora still lands on RunF9. */
+/** Old addresses of renamed or retired products. Planora is now RunF9; SafeClaw is off the site for now. */
 export const PRODUCT_ALIASES: Record<string, string> = { planora: "runf9" };
+
+/** Products taken off the site; their old pages send visitors to the product list. */
+export const RETIRED_SLUGS = ["safeclaw", "mindcue", "care360"];
 
 export function getShippingProjects(): Project[] {
   return projects.filter((p) => p.status === "shipping");

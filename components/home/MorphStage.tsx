@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useAnimationControls, useInView, useReducedMot
 import { splitWordmark } from "../Wordmark";
 
 /** Product names, read live from each product's card by the page. */
-export type StageNames = { mailhandled: string; runf9: string; safeclaw: string };
+export type StageNames = { mailhandled: string; runf9: string };
 
 function Mark({ name, gold }: { name: string; gold: string }) {
   const [a, b] = splitWordmark(name);
@@ -21,7 +21,7 @@ function Mark({ name, gold }: { name: string; gold: string }) {
 // and colour change; the content swaps with a short blur) while a cursor drives each change.
 // The last state leads back into the first, so it loops seamlessly.
 
-type StateId = "cta" | "inbox" | "schedule" | "notes";
+type StateId = "cta" | "inbox" | "schedule";
 
 interface StageState {
   id: StateId;
@@ -39,7 +39,6 @@ const STATES: StageState[] = [
   { id: "cta", w: 236, h: 58, r: 29, bg: "#C8963E", border: "rgba(255,255,255,0.25)", click: { x: 62, y: 6 }, hold: 0.7 },
   { id: "inbox", w: 360, h: 280, r: 26, bg: "#162D54", border: "rgba(255,255,255,0.10)", click: { x: 110, y: 96 }, hold: 1.6 },
   { id: "schedule", w: 380, h: 270, r: 20, bg: "#F8F6F3", border: "rgba(10,22,40,0.06)", click: { x: 120, y: 88 }, hold: 1.6 },
-  { id: "notes", w: 340, h: 318, r: 30, bg: "#0F2140", border: "rgba(255,255,255,0.10)", click: { x: 120, y: 70 }, hold: 1.6 },
 ];
 
 const shapeSpring = { type: "spring" as const, bounce: 0.12, duration: 0.75 };
@@ -108,7 +107,6 @@ export default function MorphStage({ names }: { names: StageNames }) {
               {state.id === "cta" && <CtaContent name={names.mailhandled} />}
               {state.id === "inbox" && <InboxContent name={names.mailhandled} />}
               {state.id === "schedule" && <ScheduleContent name={names.runf9} />}
-              {state.id === "notes" && <NotesContent name={names.safeclaw} />}
             </motion.div>
           </AnimatePresence>
         </motion.div>
@@ -234,35 +232,6 @@ function ScheduleContent({ name }: { name: string }) {
       <motion.div {...item(5)} className="mt-auto flex items-center justify-between rounded-xl bg-white px-3.5 py-2.5 text-[12px] shadow-[var(--shadow-sm)]">
         <span className="text-warm-600">What&apos;s on track, what&apos;s late</span>
         <span className="font-semibold text-navy-950">Explained</span>
-      </motion.div>
-    </div>
-  );
-}
-
-function NotesContent({ name }: { name: string }) {
-  const notes = [
-    { src: "Gmail", text: "Reply needed on the contract draft" },
-    { src: "LinkedIn", text: "New message from a recruiter" },
-    { src: "WhatsApp", text: "Pickup moved to 5 pm" },
-  ];
-  return (
-    <div className="flex h-full flex-col p-6 text-white">
-      <div className="flex items-center justify-between">
-        <span className="whitespace-nowrap text-[15px] leading-none">
-          <Mark name={name} gold="text-gold-400" />
-        </span>
-        <span className="text-[11px] text-white/60">What may need you</span>
-      </div>
-      <div className="mt-5 space-y-2.5">
-        {notes.map((n, i) => (
-          <motion.div key={n.src} {...item(i)} className="rounded-xl border border-white/10 bg-white/[0.05] px-3.5 py-2.5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-wider text-gold-400/90">{n.src}</div>
-            <div className="mt-0.5 text-[12.5px] text-white/85">{n.text}</div>
-          </motion.div>
-        ))}
-      </div>
-      <motion.div {...item(4)} className="mt-auto pt-3 text-center text-[11.5px] text-white/50">
-        It never sends anything for you.
       </motion.div>
     </div>
   );

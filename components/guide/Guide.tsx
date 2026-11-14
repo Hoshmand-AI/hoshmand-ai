@@ -142,11 +142,25 @@ export default function Guide({ products }: { products?: Project[] }) {
 
   const suggestions = suggestionsFor(pathname, products);
 
+  // While the home page's own Ask bar is on screen, the floating launcher would only duplicate it
+  // (and on a phone it covers the hero buttons), so it waits until that bar scrolls away.
+  const [askBarVisible, setAskBarVisible] = useState(false);
+  useEffect(() => {
+    const bar = document.getElementById("hero-ask")?.closest("form");
+    if (!bar) {
+      setAskBarVisible(false);
+      return;
+    }
+    const io = new IntersectionObserver(([e]) => setAskBarVisible(e.isIntersecting), { threshold: 0 });
+    io.observe(bar);
+    return () => io.disconnect();
+  }, [pathname]);
+
   return (
     <>
       {/* Launcher */}
       <AnimatePresence>
-        {!open && (
+        {!open && !askBarVisible && (
           <motion.button
             ref={launcherRef}
             type="button"
