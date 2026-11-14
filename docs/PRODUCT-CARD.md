@@ -9,10 +9,10 @@ minute of that product's deploy. Nobody has to edit this site.
 
 | Product     | Card                                         | Source in the product's repo        |
 |-------------|----------------------------------------------|-------------------------------------|
-| RunF9       | https://planora-chi.vercel.app/api/product   | `src/lib/product-card.ts` (planora) |
+| RunF9       | https://runf9.ai/api/product                 | `src/lib/product-card.ts` (planora repo) |
 | MailHandled | https://mailhandled.ai/api/product           | `apps/web/lib/productCard.ts`       |
 
-SafeClaw has no public address yet, so it has no card; its copy lives in `lib/projects.ts`.
+SafeClaw is off the site for now (`/products/safeclaw` redirects to `/products`).
 
 ## Format (`hoshmand.product/1`)
 
@@ -24,7 +24,7 @@ SafeClaw has no public address yet, so it has no card; its copy lives in `lib/pr
   "formerNames": ["Planora"],
   "tagline": "Construction scheduling, explained",
   "summary": "One or two sentences on what it does.",
-  "url": "https://planora-chi.vercel.app",
+  "url": "https://runf9.ai",
   "status": "beta | live | in-development",
   "access": "invite-only | open",
   "accessNote": "Private beta · by invitation",
@@ -45,7 +45,9 @@ card's own origin, `url` only over https, and a name only as letters, digits, sp
 the product shows its fallback copy and the page still renders.
 
 The studio's own paragraphs about a product (problem, approach, ethics) stay here, but a rename
-is applied to them too, so the old name never sits next to the new one. `/products/planora`
+is applied to them too, so the old name never sits next to the new one. Former names are not shown
+on the pages; they stay in the search-engine data (`alternateName`) and the guide, so a search or a
+question for "Planora" still finds RunF9. `/products/planora`
 redirects to `/products/runf9`; `PRODUCT_ALIASES` in `lib/projects.ts` holds such old addresses.
 
 ## Adding a product

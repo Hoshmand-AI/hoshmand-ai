@@ -40,7 +40,6 @@ function productReply(p: Project, lead = ""): GuideReply {
 const NEEDS: { slug: string; words: string[] }[] = [
   { slug: "mailhandled", words: ["email", "e-mail", "inbox", "gmail", "outlook", "calendar", "subscription", "attachment", "mail", "reply", "replies"] },
   { slug: "runf9", words: ["construction", "schedule", "scheduling", "primavera", "p6", "ms project", "critical path", "contractor", "project plan", "gantt", "delay", "dcma", "f9"] },
-  { slug: "safeclaw", words: ["whatsapp", "linkedin", "message", "notes", "voice", "on my mac", "accounts", "notification", "dm", "twitter"] },
 ];
 
 export const SUGGESTIONS = [
@@ -133,7 +132,7 @@ export function reply(raw: string, list: Project[] = fallbackProjects): GuideRep
   // Ethics and privacy
   if (has(q, "ethic", "responsible", "privacy", "private", "safe", "trust", "data", "secure")) {
     return {
-      text: `Responsible AI is the foundation here, not a feature. Every product keeps a person in control: ${nm(projects, "mailhandled")} sends nothing until you press the button, ${nm(projects, "safeclaw")} has no way to send or post at all, and ${nm(projects, "runf9")} shows its work. Each product page lists its commitments under Ethics.`,
+      text: `Responsible AI is the foundation here, not a feature. Every product keeps a person in control: ${nm(projects, "mailhandled")} sends nothing until you press the button, and ${nm(projects, "runf9")} shows its work, so every figure can be checked. Each product page lists its commitments under Ethics.`,
       actions: [
         { kind: "navigate", label: "Read how we work", href: "/about" },
         { kind: "navigate", label: "See the products", href: "/products" },

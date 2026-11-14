@@ -1,7 +1,10 @@
 export const site = {
   name: "Hoshmand AI",
   domain: "hoshmand.ai",
-  url: "https://hoshmand.ai",
+  // The address the site actually serves from: hoshmand.ai redirects here.
+  url: "https://www.hoshmand.ai",
+  /** The year the studio was founded, for search engines and the About page. */
+  foundingYear: 2026,
   supportEmail: "support@hoshmand.ai",
   founderName: "Ahmad Nesar Sediqzada",
   linkedinUrl: "https://linkedin.com/in/ahmadsediqzada",

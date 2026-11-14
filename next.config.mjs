@@ -7,7 +7,9 @@ const nextConfig = {
     return [
       { source: "/mindcue", destination: "/products", permanent: false },
       // Planora is now RunF9. Old links (and the Planora app's own footer) land on the new page.
-      { source: "/products/planora", destination: "/products/runf9", permanent: false },
+      { source: "/products/planora", destination: "/products/runf9", permanent: true },
+      // SafeClaw is off the site for now.
+      { source: "/products/safeclaw", destination: "/products", permanent: false },
     ];
   },
 };

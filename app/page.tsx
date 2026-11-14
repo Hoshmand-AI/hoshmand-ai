@@ -120,7 +120,7 @@ export default async function Home() {
             </HeroFade>
           </div>
           <HeroFade delay={0.45}>
-            <MorphStage names={{ mailhandled: nameOf("mailhandled"), runf9: nameOf("runf9"), safeclaw: nameOf("safeclaw") }} />
+            <MorphStage names={{ mailhandled: nameOf("mailhandled"), runf9: nameOf("runf9") }} />
           </HeroFade>
           </div>
         </Container>

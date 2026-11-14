@@ -7,6 +7,7 @@ import Reveal from "@/components/motion/Reveal";
 export const metadata: Metadata = {
   title: "Terms of Service — MindCue",
   description: "Terms of Service for MindCue, a product by Hoshmand AI.",
+  alternates: { canonical: "/terms" },
 };
 
 const sections = [
