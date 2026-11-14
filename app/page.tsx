@@ -52,6 +52,8 @@ const steps = [
   { num: "04", title: "Earn trust over time", description: "Build products that respect attention and keep delivering long after the first week." },
 ];
 
+const countWord = (n: number) => ["No", "One", "Two", "Three", "Four", "Five", "Six"][n] ?? String(n);
+
 const arrow = (
   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -152,7 +154,7 @@ export default async function Home() {
             align="center"
             eyebrow="Products"
             title="What we're building."
-            description="Three products in development, two already in private beta. Tap through to see each one."
+            description={`${countWord(projects.length)} products, ${betaCount === projects.length ? (projects.length === 2 ? "both" : "all") : countWord(betaCount).toLowerCase()} in private beta. Tap through to see each one.`}
           />
           <Reveal className="mt-12" delay={0.1}>
             <ProductShowcase products={showcase} />
