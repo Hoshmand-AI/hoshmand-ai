@@ -13,7 +13,7 @@ import Reveal from "@/components/motion/Reveal";
 import ProductLogo from "@/components/live/ProductLogo";
 import LiveStamp from "@/components/live/LiveStamp";
 import WhatsNew from "@/components/live/WhatsNew";
-import { PRODUCT_ALIASES, projects } from "@/lib/projects";
+import { PRODUCT_ALIASES, RETIRED_SLUGS, projects } from "@/lib/projects";
 import { CARD_REVALIDATE, getLiveProject, getLiveProjects } from "@/lib/live";
 
 // Re-rendered from the product's own card about every 30 seconds (lib/live.ts).
@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getLiveProject(params.slug);
   if (!project) return {};
-  return { title: project.name, description: project.tagline };
+  return { title: project.name, description: project.tagline, alternates: { canonical: `/products/${project.slug}` } };
 }
 
 const chevronLeft = (
@@ -41,12 +41,13 @@ const chevronLeft = (
 
 export default async function ProjectDetailPage({ params }: Props) {
   if (PRODUCT_ALIASES[params.slug]) redirect(`/products/${PRODUCT_ALIASES[params.slug]}`);
+  if (RETIRED_SLUGS.includes(params.slug)) redirect("/products");
   const project = await getLiveProject(params.slug);
 
   if (!project) notFound();
   if (project.customPage) redirect(`/${project.slug}`);
 
-  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access, accessNote, updatesUrl, logo, shortTagline, formerNames, syncedAt } = project;
+  const { slug, name, tagline, status, liveUrl, expectedShip, problem, approach, highlights, ethics, artifact, appUrl, access, accessNote, updatesUrl, logo, shortTagline, syncedAt } = project;
   const appHost = appUrl ? appUrl.replace(/^https?:\/\//, "").replace(/\/$/, "") : "";
 
   // Neighbours for the "next product" footer.
@@ -76,12 +77,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               </HeroFade>
               <HeroText text={name} className="text-[3rem] !text-white sm:text-[4.2rem] !leading-none tracking-[-0.03em]" delay={0.1} />
               <HeroFade delay={0.3}>
-                {(shortTagline || formerNames?.length) && (
-                  <p className="mt-4 text-[15px] font-medium text-gold-400">
-                    {shortTagline}
-                    {formerNames?.length ? <span className="text-white/60">{shortTagline ? " · " : ""}formerly {formerNames.join(", ")}</span> : null}
-                  </p>
-                )}
+                {shortTagline && <p className="mt-4 text-[15px] font-medium text-gold-400">{shortTagline}</p>}
               </HeroFade>
               <HeroFade delay={0.35}>
                 <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/70">{tagline}</p>

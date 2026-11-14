@@ -10,7 +10,8 @@ export const revalidate = CARD_REVALIDATE;
 
 export const metadata: Metadata = {
   title: "Products",
-  description: "AI products built by Hoshmand AI.",
+  description: "MailHandled and RunF9: AI products built by Hoshmand AI.",
+  alternates: { canonical: "/products" },
 };
 
 function SectionHeading({ title, count, tone }: { title: string; count: string; tone: "green" | "gold" }) {
@@ -40,7 +41,7 @@ export default async function ProductsPage() {
       <PageHero
         eyebrow="Products"
         title="What we're building."
-        description="Three products in development, two in private beta. Every one grounded in responsible AI principles."
+        description="Two products in private beta, each grounded in responsible AI principles."
       />
 
 

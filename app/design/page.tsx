@@ -7,6 +7,7 @@ import tokens from "@/design/tokens.json";
 export const metadata: Metadata = {
   title: "Design system",
   description: "The colour and type system behind Hoshmand AI: named shades, checked for contrast.",
+  alternates: { canonical: "/design" },
 };
 
 // WCAG contrast, so each swatch can show how it reads against white.

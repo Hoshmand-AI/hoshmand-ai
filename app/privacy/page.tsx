@@ -7,6 +7,7 @@ import Reveal from "@/components/motion/Reveal";
 export const metadata: Metadata = {
   title: "Privacy Policy — MindCue",
   description: "Privacy Policy for MindCue, a product by Hoshmand AI. Learn how we handle your data.",
+  alternates: { canonical: "/privacy" },
 };
 
 const sections = [

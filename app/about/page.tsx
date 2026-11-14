@@ -10,6 +10,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description: "Hoshmand AI is an independent AI studio focused on building responsible, human-centered AI products grounded in AI ethics.",
+  alternates: { canonical: "/about" },
 };
 
 const values = [
