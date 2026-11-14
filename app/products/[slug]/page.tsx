@@ -161,7 +161,7 @@ export default async function ProjectDetailPage({ params }: Props) {
       {/* Main */}
       <section className="py-20 sm:py-24">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-3 lg:gap-16">
             <Reveal className="lg:col-span-2">
               <ProjectTabs problem={problem} approach={approach} highlights={highlights} ethics={ethics} />
               <WhatsNew project={project} />

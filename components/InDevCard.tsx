@@ -29,8 +29,8 @@ export default function InDevCard({ project }: { project: Project }) {
           className="hero-surface group/banner relative flex h-40 items-center justify-center"
         >
           <span className="flex items-center gap-4 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
-            <ProductLogo src={logo?.mark} size={44} />
-            <Wordmark slug={slug} name={name} className="text-[40px] text-white" />
+            <ProductLogo src={logo?.mark} size={40} />
+            <Wordmark slug={slug} name={name} className="text-[34px] text-white min-[380px]:text-[40px]" />
           </span>
           <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur transition-colors group-hover/banner:bg-white/15 group-hover/banner:text-white">
             {appHost}
@@ -43,8 +43,8 @@ export default function InDevCard({ project }: { project: Project }) {
       ) : (
         <div className="hero-surface relative flex h-40 items-center justify-center">
           <span className="flex items-center gap-4 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
-            <ProductLogo src={logo?.mark} size={44} />
-            <Wordmark slug={slug} name={name} className="text-[40px] text-white" />
+            <ProductLogo src={logo?.mark} size={40} />
+            <Wordmark slug={slug} name={name} className="text-[34px] text-white min-[380px]:text-[40px]" />
           </span>
         </div>
       )}
