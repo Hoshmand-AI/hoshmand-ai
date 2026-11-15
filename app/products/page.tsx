@@ -48,7 +48,7 @@ export default async function ProductsPage() {
       <section className="bg-warm-100 py-20 sm:py-28">
         <Container>
           <SectionHeading title="In Development" count={`${inDev.length} active`} tone="gold" />
-          <RevealGroup className="grid gap-6 md:grid-cols-2">
+          <RevealGroup className="grid grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-2">
             {inDev.map((p) => (
               <RevealItem key={p.slug} className="h-full">
                 <InDevCard project={p} />

@@ -52,6 +52,8 @@ const steps = [
   { num: "04", title: "Earn trust over time", description: "Build products that respect attention and keep delivering long after the first week." },
 ];
 
+const countWord = (n: number) => ["No", "One", "Two", "Three", "Four", "Five", "Six"][n] ?? String(n);
+
 const arrow = (
   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -84,7 +86,7 @@ export default async function Home() {
       {/* Hero */}
       <section className="hero-surface -mt-16 pb-24 pt-36 sm:pb-32 sm:pt-44">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-8">
+          <div className="grid grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-8">
           <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
             <HeroFade delay={0}>
               <span className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[12px] font-medium text-white/70 backdrop-blur">
@@ -152,7 +154,7 @@ export default async function Home() {
             align="center"
             eyebrow="Products"
             title="What we're building."
-            description="Three products in development, two already in private beta. Tap through to see each one."
+            description={`${countWord(projects.length)} products, ${betaCount === projects.length ? (projects.length === 2 ? "both" : "all") : countWord(betaCount).toLowerCase()} in private beta. Tap through to see each one.`}
           />
           <Reveal className="mt-12" delay={0.1}>
             <ProductShowcase products={showcase} />

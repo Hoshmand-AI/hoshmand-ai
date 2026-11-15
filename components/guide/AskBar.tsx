@@ -7,7 +7,7 @@ import { ASK_EVENT } from "./Guide";
 const EXAMPLES = [
   "Help me with my inbox",
   "Explain my construction schedule",
-  "Keep track of my messages",
+  "Track my subscriptions and bills",
   "How do I get an invite?",
 ];
 
